@@ -90,6 +90,7 @@ rubocop.yml
 /ignore*/
 .tool-versions
 
+**/temp/
 .mypy_cache/
 
 .vscode
