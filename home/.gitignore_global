@@ -96,3 +96,10 @@ rubocop.yml
 .vscode
 
 venv
+
+# Ngrok
+ngrok
+.solargraph.yml
+
+Guardfile.rob
+.devcontainer

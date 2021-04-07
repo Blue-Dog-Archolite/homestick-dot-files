@@ -30,8 +30,11 @@ if dein#load_state($HOME.'/tools/dein')
   call dein#add('majutsushi/tagbar')
   call dein#add('scrooloose/nerdtree')
   call dein#add('tomtom/tlib_vim')
+  call dein#add('farmergreg/vim-lastplace')
+  call dein#add('machakann/vim-highlightedyank')
 
 
+  " Select blocks based on indent
   call dein#add('gcmt/wildfire.vim')
 
   " Search and Replace
@@ -47,6 +50,7 @@ if dein#load_state($HOME.'/tools/dein')
   call dein#add('tpope/vim-rhubarb')
 
   call dein#add('vim-scripts/Align')
+  call dein#add('junegunn/vim-easy-align')
   call dein#add('vim-scripts/L9')
   call dein#add('vim-scripts/matchit.zip')
   call dein#add('vim-scripts/taglist.vim')
@@ -71,6 +75,9 @@ if dein#load_state($HOME.'/tools/dein')
   call dein#add('junegunn/fzf', { 'build': './install', 'merged': 0 })
   call dein#add('junegunn/fzf.vim')
 
+  " Z for vim
+  call dein#add('easymotion/vim-easymotion')
+
   " Specify FZF bash location
   set rtp+=/home/rmeyer/.linuxbrew/bin/fzf
 
@@ -86,8 +93,8 @@ if dein#load_state($HOME.'/tools/dein')
   call dein#add('chriskempson/tomorrow-theme')
   call dein#add('freeo/vim-kalisi')
   call dein#add('twerth/ir_black')
-  call dein#add('ayu-theme/ayu-vim')
   call dein#add('mhartington/oceanic-next')
+  call dein#add("Luxed/ayu-vim")
 
   call dein#add('vim-scripts/Wombat')
   call dein#add('w0ng/vim-hybrid')
@@ -95,29 +102,16 @@ if dein#load_state($HOME.'/tools/dein')
 
   " Vim indent
   call dein#add('nathanaelkane/vim-indent-guides')
-  " call dein#add('junegunn/rainbow_parentheses.vim')
-  call dein#add('eapache/rainbow_parentheses.vim')
-
-  call dein#add('junegunn/rainbow_parentheses.vim')
+  call dein#add('luochen1990/rainbow')
 
   " Linters
   call dein#add('w0rp/ale')
-  " call dein#add('ambv/black')
   call dein#add('psf/black', { 'rev': 'ce14fa8b497bae2b50ec48b3bd7022573a59cdb1' })
-  " call dein#add('tell-k/vim-autopep8')
 
   " Completion
-  " call dein#add('Shougo/deoplete.nvim')
-  " call dein#add('zchee/deoplete-jedi')
   call dein#add('ervandew/supertab')
-  " call dein#add('neoclide/coc.nvim', { 'build': './install.sh nightly', 'merged': 0 })
-  call dein#add('neoclide/coc.nvim', {'merged':0, 'rev': 'release'})
-
-  
   call dein#add('neoclide/coc.nvim', { 'merged': 0 })
-
   " call dein#add('python-rope/ropevim')
-  " call dein#add('vim-syntastic/syntastic')
 
   " Rails / Ruby
   call dein#add('thoughtbot/vim-rspec')
@@ -127,6 +121,9 @@ if dein#load_state($HOME.'/tools/dein')
   call dein#add('skalnik/vim-vroom')
   call dein#add('tpope/vim-endwise')
 
+  " BUnch of languages
+  call dein#add('sheerun/vim-polyglot')
+
   " Puppet
   call dein#add('rodjek/vim-puppet')
 
@@ -134,31 +131,25 @@ if dein#load_state($HOME.'/tools/dein')
   call dein#add('vadv/vim-chef')
 
   " Javascript
+  call dein#add('HerringtonDarkholme/yats.vim')
+  call dein#add('Quramy/tsuquyomi') " , { 'build': './make', 'rtp': '' })
+  call dein#add('Quramy/vim-js-pretty-template')
   call dein#add('jelera/vim-javascript-syntax')
   call dein#add('maksimr/vim-jsbeautify')
-  " call dein#add('mhartington/nvim-typescript')
-  call dein#add('HerringtonDarkholme/yats.vim')
-  call dein#add('Quramy/vim-js-pretty-template')
-  call dein#add('Quramy/tsuquyomi') " , { 'build': './make', 'rtp': '' })
+  call dein#add('mhartington/nvim-typescript', {'do': './install.sh'})
 
   " Postman replacement
   call dein#add('iamcco/coc-post')
 
-  " Puppet
-  call dein#add('rodjek/vim-puppet')
-
-  " Snipbits
-  " call dein#add('SirVer/ultisnips')
-  " call dein#add('honza/vim-snippets')
-  " call dein#add('Shougo/neosnippet.vim')
-  " call dein#add('Shougo/neosnippet-snippets')
+  " Tmux keybindings
+  call dein#add('christoomey/vim-tmux-navigator')
 
   if !has('nvim')
     call dein#add('roxma/nvim-yarp')
     call dein#add('roxma/vim-hug-neovim-rpc')
   endif
 
-  let g:deoplete#enable_at_startup = 1
+  " let g:deoplete#enable_at_startup = 1
 
   " Required
   call dein#end()
@@ -203,14 +194,25 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.\*']
 let g:gutentags_modules = ['ctags', 'gtags_cscope']
 
 " config project root markers.
-" let g:gutentags_project_root = ['.root']
+let g:gutentags_project_root = ['.git']
 
 " generate datebases in my cache directory, prevent gtags files polluting my project
-let g:gutentags_cache_dir = expand('~/.cache/tags')
-let g:gutentags_exclude_filetypes = ['COMMIT_EDITMSG']
+let g:gutentags_cache_dir = expand('./tags')
+" let g:gutentags_exclude_filetypes = ['COMMIT_EDITMSG']
 
 " change focus to quickfix window after search (optional).
-let g:gutentags_plus_switch = 1
+" let g:gutentags_plus_switch = 1
+" let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+" let g:gutentags_generate_on_empty_buffer = 0
+" let g:gutentags_trace = 1
+
+" let g:gutentags_ctags_extra_args = [
+"       \ '--tag-relative=yes',
+"       \ '--fields=+ailmnS',
+"       \ ]
+
 
 " #######################################################################
 " Airline Vim Tagbar Setup
@@ -231,7 +233,7 @@ let g:airline_extensions = ['branch', 'hunks', 'coc']
 " let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 " let g:airline_section_a = 'GT: %{gutentags#statusline()}'
 " let g:airline_section_b = 'FUCK YOU DUDE: %{gutentags#statusline()}'
-let g:airline_section_b = 'LS: %{LinterStatus()}'
+" let g:airline_section_b = 'LS: %{LinterStatus()}'
 let g:airline_section_c = '%t'
 
 " let g:airline#extensions#default#section_truncate_width = {
@@ -249,12 +251,12 @@ let g:airline_section_c = '%t'
 
 "   " Set this. Airline will handle the rest.
 "   " Enabled ALE  Airline
-"   let g:airline#extensions#ale#enabled = 1
-  " let g:airline_section_b = 'GT: %{gutentags#statusline()}'
-"   let g:ale_linters = {
-"     \ 'sh': ['language_server'],
-"     \ }
-"
+   let g:airline#extensions#ale#enabled = 1
+   let g:airline_section_b = 'GT: %{gutentags#statusline()}'
+   let g:ale_linters = {
+     \ 'sh': ['language_server'],
+     \ }
+
 " #######################################################################
 
 set nocp
@@ -397,15 +399,12 @@ function TrimWhiteSpace()
 
   "Ctags and other shortcuts
   "***********************************************
-  map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-  map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-  map <Leader>rt :!ctags -R --extra=+f --exclude=@/home/rmeyer/.ctags_ignore .<CR><CR>
-  " map <Leader>rt :!ctags -R --extra=+f .<CR><CR>
-
-  " --exclude=.git --exclude=public/assets --exclude=log -R * --exclude=build --exclude=node_modules<CR><CR>
+  " map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+  " map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+  " map <Leader>rt :!ctags -R --extra=+f --exclude=@/Users/rmeyer/.ctags_ignore .<CR><CR>
 
   "Sets the tags directory to look backwards till it finds a tags dir
-  set tags=tags;/
+  " set tags=~/.tags;/
 
   " associate  with ruby filetype
   au BufRead,BufNewFile ^M^W^W    setfiletype ruby
@@ -417,7 +416,8 @@ function TrimWhiteSpace()
   set si " smartindent (local to buffer)
 
   " Indents
-  au VimEnter * RainbowParentheses
+  let g:rainbow_active = 1
+  " au VimEnter * RainbowParentheses
   " au Syntax * RainbowParenthesesLoadRound
   " au Syntax * RainbowParenthesesLoadSquare
   " au Syntax * RainbowParenthesesLoadBraces
@@ -471,14 +471,6 @@ function TrimWhiteSpace()
   set background=dark
   syntax on " syntax highlighting
 
-" Hard to type *****************************************************************
-imap hh =>
-imap kk ->
-imap aa @
-" imap ;; {% %}
-imap zz import pudb<CR>pudb.set_trace()
-imap ;; """"<CR><CR>"""
-
   if has('gui_running')
     colorscheme ir_black
     set mouse=a
@@ -486,11 +478,14 @@ imap ;; """"<CR><CR>"""
     set lazyredraw "faster processing
   else
     " colorscheme kalisi
-    " colorscheme wombat
-    colorscheme onedark
+    colorscheme wombat
+    " colorscheme onedark
     " colorscheme ir_black
     " colorscheme tomorrow
     " colorscheme hybrid
+    " let ayucolor="mirage"
+    " colorscheme ayu
+
     set termguicolors "Remove this in urxvt
   end
 
@@ -536,14 +531,16 @@ imap ;; """"<CR><CR>"""
   " compiler ruby         " Enable compiler support for ruby
   " map <F5> :!ruby %<CR>
 
-  let g:ruby_host_prog = '/home/linuxbrew/.linuxbrew/lib/ruby/gems/3.0.0/gems/neovim-0.8.1/exe/neovim-ruby-host'
+  " let g:ruby_host_prog = $HOME+'/.asdf/installs/ruby/2.7.2/bin/neovim-ruby-host'
+  let g:ruby_host_prog = '/Users/rmeyer/.asdf/installs/ruby/2.7.2/lib/ruby/gems/2.7.0/gems/neovim-0.8.1/exe/neovim-ruby-host'
 
   " Hard to type *****************************************************************
   imap hh =>
   imap kk ->
   imap aa @
-  imap ;; {% %}
-  imap zz import pudb<CR>pudb.set_trace()
+  imap zz binding.pry
+  imap ;; """"<CR><CR>"""
+  " imap zz import pudb<CR>pudb.set_trace()
 
   " Change which file opens after executing :Rails command
   " ****************************************
@@ -579,16 +576,25 @@ imap ;; """"<CR><CR>"""
   nmap <Leader>sj :SplitjoinJoin<cr>
   nmap <Leader>ss :SplitjoinSplit<cr>
 
-  " Deoplete ******************************************************************
-  set runtimepath+=~/.vim/dein/repos/github.com/Shougo/deoplete.nvim/
+  " Tmux Navigation **********************************************************
+  let g:tmux_navigator_no_mappings = 1
 
-  if has('nvim')
-    let g:deoplete#omni_patterns = {}
-    let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
-    let g:deoplete#enable_at_startup = 1
-    " let g:deoplete#enable_debug = 1
-    " call deoplete#enable_logging('DEBUG', '/tmp/deoplete.log')
-  endif
+  nnoremap <silent> <Leader>" :TmuxNavigateLeft<cr>
+  nnoremap <silent> <Leader>m :TmuxNavigateDown<cr>
+  nnoremap <silent> <Leader>u :TmuxNavigateUp<cr>
+  " nnoremap <silent>  :TmuxNavigateRight<cr>
+  " nnoremap <silent>  :TmuxNavigatePrevious<cr>
+
+  " " Deoplete ******************************************************************
+  " set runtimepath+=~/.vim/dein/repos/github.com/Shougo/deoplete.nvim/
+
+  " if has('nvim')
+  "   let g:deoplete#omni_patterns = {}
+  "   let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
+  "   let g:deoplete#enable_at_startup = 1
+  "   " let g:deoplete#enable_debug = 1
+  "   " call deoplete#enable_logging('DEBUG', '/tmp/deoplete.log')
+  " endif
 
   " Plugin key-mappings.
   " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
@@ -662,10 +668,9 @@ imap ;; """"<CR><CR>"""
   let g:indent_guides_enable_on_vim_startup = 1
 
 
-  " autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+  autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 
   " Ale ES Linter
-  "
   let g:ale_fixers = {
         \   'javascript': ['eslint'],
         \   'python3': ['black', 'autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf'],
@@ -673,7 +678,7 @@ imap ;; """"<CR><CR>"""
         \   'ruby': ['remove_trailing_lines', 'rufo', 'sorbet', 'trim_whitespace', 'rubocop'],
         \}
 
-  let g:ale_completion_enabled = 1
+  let g:ale_completion_enabled = 0
   let g:ale_sign_column_always = 1
   let g:ale_lint_on_enter = 1
   let g:ale_python_flake8_auto_pipenv = 1
@@ -715,7 +720,7 @@ let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
 
 " " FZF Settings
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.orig,*/public/assets/*,venv/*,node_modules/*
-map <Leader>f :FZF<CR>
+map <Leader>f :GFiles<CR>
 map <Leader>t :Tags<CR>
 map <Leader>b :Buffers<CR>
 
