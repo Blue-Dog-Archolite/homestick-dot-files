@@ -1,1 +1,1 @@
-/Users/rmeyer/.local/share/omf/themes/zish/fish_prompt.fish
+/home/rmeyer/.local/share/omf/themes/zish/fish_prompt.fish

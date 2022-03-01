@@ -405,7 +405,7 @@ function TrimWhiteSpace()
   "***********************************************
   " map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
   " map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-  " map <Leader>rt :!ctags -R --extra=+f --exclude=@/Users/rmeyer/.ctags_ignore .<CR><CR>
+  map <Leader>rt :!ctags -R --extra=+f --exclude=@/Users/rmeyer/.ctags_ignore .<CR><CR>
 
   "Sets the tags directory to look backwards till it finds a tags dir
   " set tags=~/.tags;/
