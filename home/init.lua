@@ -1,5 +1,7 @@
 vim.call('plug#begin', '~/.config/nvim/plugged')
 
+
+-- Plugs-Start
 local Plug = vim.fn['plug#']
 
 Plug 'tpope/vim-sensible'
@@ -33,6 +35,7 @@ Plug 'gcmt/wildfire.vim'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-haml'
 Plug 'tpope/vim-surround'
+Plug 'junegunn/fzf.vim'
 Plug('junegunn/fzf', {['do'] = vim.fn['fzf#install']})
 
 -- Git
@@ -135,6 +138,8 @@ Plug('neoclide/coc.nvim', {['do'] ='yarn install --frozen-lockfile'})
 
 vim.call('plug#end')
 
+--Plugs-end
+
 vim.o.smartcase = true
 vim.o.incsearch = true
 vim.o.hlsearch = true
@@ -142,8 +147,8 @@ vim.o.ignorecase = true
 
 
 vim.cmd([[
- filetype off                  " required
  set shell=/bin/sh
+ filetype off
 
  if &compatible
    set nocompatible               " Be iMproved
@@ -164,6 +169,17 @@ vim.cmd([[
  set history=1024        " Number of things to remember in history.
  set autowrite           " Writes on make/shell commands
  set timeoutlen=250      " Time to wait after ESC (default causes an annoying delay)
+
+
+ ]])
+
+
+-- CoC.vim
+
+
+vim.cmd([[
+ " Coc.Vim
+ let g:coc_global_extensions = ['coc-syntax', 'coc-post', 'coc-neosnippet', 'coc-html', 'coc-dictionary', 'coc-tsserver', 'coc-solargraph', 'coc-phpls', 'coc-json', 'coc-docker', 'coc-word', 'coc-ultisnips', 'coc-tag' ]
 
 
  " Status Bar
@@ -302,6 +318,7 @@ vim.cmd([[
  autocmd BufWritePre *.rb :%s/\s\+$//e
  autocmd BufRead *.py execute ':Black'
  autocmd BufWritePre *.py execute ':Black'
+
  " 
  "   map <F3> :call FormatJSON()<CR>
  " 
@@ -461,196 +478,196 @@ imap kk ->
 imap aa @
 imap zz binding.pry
 imap ;; """"<CR><CR>"""
- imap zz import pudb<CR>pudb.set_trace()
- " 
- "   " Change which file opens after executing :Rails command
- "   " ****************************************
- "   " let g:rails_default_file='config/database.yml'
- " 
- "   " Insert New Line *************************************************************
- "   map <S-Enter> O<ESC> " awesome, inserts new line without going into insert mode
- "   map <Enter> o<ESC>
- " 
- " 
- "   " -----------------------------------------------------------------------------
- "   " |                              Plug-ins                                     |
- "   " -----------------------------------------------------------------------------
- " 
- "   " NERDTree ********************************************************************
- "   :noremap <Leader>n :NERDTreeToggle<CR>
- "   let NERDTreeHijackNetrw=1 " User instead of Netrw when doing an edit /foobar
- "   let NERDTreeMouseMode=1 " Single click for everything
- "   let NERDTreeShowHidden=1
- "   let g:vroom_map_keys = 0
- " 
- "   :noremap <Leader>z :NERDTreeFind<CR>
- "   nnoremap ,m :w <BAR> !lessc % > %:t:r.css<CR><space>
- " 
- "   " wildfire  ******************************************************************
- "   " This selects the next closest text object.
- "   let g:wildfire_fuel_map = "<TAB>"
- " 
- "   " This selects the previous closest text object.
- "   let g:wildfire_water_map = "<BS>"
- " 
- "   " SplitJoin ******************************************************************
- "   nmap <Leader>sj :SplitjoinJoin<cr>
- "   nmap <Leader>ss :SplitjoinSplit<cr>
- " 
- "   " Tmux Navigation **********************************************************
- "   let g:tmux_navigator_no_mappings = 1
- " 
- "   nnoremap <silent> <Leader>" :TmuxNavigateLeft<cr>
- "   nnoremap <silent> <Leader>m :TmuxNavigateDown<cr>
- "   nnoremap <silent> <Leader>u :TmuxNavigateUp<cr>
- "   " nnoremap <silent>  :TmuxNavigateRight<cr>
- "   " nnoremap <silent>  :TmuxNavigatePrevious<cr>
- " 
- "   " Plugin key-mappings.
- "   " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
- "   imap <C-k>     <Plug>(neosnippet_expand_or_jump)
- "   smap <C-k>     <Plug>(neosnippet_expand_or_jump)
- "   xmap <C-k>     <Plug>(neosnippet_expand_target)
- " 
- "   " Enable snipMate compatibility feature.
- "   let g:neosnippet#enable_snipmate_compatibility = 1
- " 
- "   " For conceal markers.
- "   " For hiding quotes and double quotes
- "   if has('conceal')
- "     set conceallevel=0 concealcursor=niv
- "   endif
- " 
- "   let g:python_host_prog=$HOME.'/.local/share/virtualenvs/vim2/bin/python2'
- " 
- "   let g:python3_host_prog=$HOME.'/.local/share/virtualenvs/vim3/bin/python3'
- "   let g:python3host_prog=$HOME.'/.local/share/virtualenvs/vim3/bin/python3'
- " 
- "   let g:syntastic_always_populate_loc_list = 1
- "   let g:syntastic_auto_loc_list = 1
- "   let g:syntastic_check_on_open = 1
- "   let g:syntastic_check_on_wq = 0
- " 
- "   " (Optional)Remove Info(Preview) window
- "   set completeopt-=preview
- " 
- "   " (Optional)Hide Info(Preview) window after completions
- "   autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
- "   autocmd InsertLeave * if pumvisible() == 0|pclose|endif
- " 
- "   " (Optional) Enable terraform plan to be include in filter
- "   let g:syntastic_terraform_tffilter_plan = 1
- " 
- "   " Formatting the sucker
- "   let g:terraform_fmt_on_save=1
- " 
- " 
- "   " (Optional) Default: 0, enable(1)/disable(0) plugin's keymapping
- "   let g:terraform_completion_keys = 1
- " 
- "   " # END TF Config
- " 
- "   let g:flake8_show_in_file=1  " show
- "   let g:flake8_show_in_gutter=1  " show
- "   let g:flake8_show_quickfix=1  " show (default)
- "   let g:flake8_error_marker='EE'     " set error marker to 'EE'
- "   let g:flake8_warning_marker='WW'   " set warning marker to 'WW
- " 
- "   " Supertab go down not up
- "   let g:SuperTabDefaultCompletionType = "<c-n>"
- " 
- "   " TypeScript
- "   let g:nvim_typescript#javascript_support = 1
- " 
- "   " Turn on line guides
- "   let g:indent_guides_enable_on_vim_startup = 1
- " 
- " 
- "   autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
- " 
- "   " Ale ES Linter
- "   let g:ale_fixers = {
- "         \   'javascript': ['eslint'],
- "         \   'python3': ['black', 'autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf'],
- "         \   'python': ['black','autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf'],
- "         \   'ruby': ['remove_trailing_lines', 'rufo', 'sorbet', 'trim_whitespace', 'rubocop'],
- "         \}
- " 
- "   let g:ale_completion_enabled = 0
- "   let g:ale_sign_column_always = 1
- "   let g:ale_lint_on_enter = 1
- "   let g:ale_python_flake8_auto_pipenv = 1
- "   let g:ale_fix_on_save = 1
- " 
- "   let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
- "   let g:ale_sign_error = '✘'
- "   let g:ale_sign_warning = '⚠'
- " 
- "   nmap <silent> <C-e> <Plug>(ale_next_wrap)
- " 
- " 
- "   function! LinterStatus() abort
- "     let l:counts = ale#statusline#Count(bufnr(''))
- "     let l:all_errors = l:counts.error + l:counts.style_error
- "     let l:all_non_errors = l:counts.total - l:all_errors
- "     return l:counts.total == 0 ? 'OK' : printf(
- "           \   '%d⨉ %d⚠ ',
- "           \   all_errors,
- "           \   all_non_errors
- "           \)
- "   endfunction
- " 
- " 
- " " HTML Auto Close
- " let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.ts'
- " let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
- " 
- " :map <Leader>c :Commentary<CR>
- " 
- " " FZF Settings
- " " set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.orig,*/public/assets/*,venv/*,node_modules/*
- " map <Leader>f :GFiles<CR>
- " map <Leader>t :Tags<CR>
- " map <Leader>b :Buffers<CR>
- " 
- " " Define mappings
- " autocmd FileType denite call s:denite_my_settings()
- " function! s:denite_my_settings() abort
- "   nnoremap <silent><buffer><expr> <CR>
- "   \ denite#do_map('do_action')
- " 
- "   nnoremap <silent><buffer><expr> p
- "   \ denite#do_map('do_action', 'preview')
- " 
- "   nnoremap <silent><buffer><expr> q
- "   \ denite#do_map('quit')
- " 
- "   nnoremap <silent><buffer><expr> i
- "   \ denite#do_map('open_filter_buffer')
- " 
- "   nnoremap <silent><buffer><expr> <Space>
- "   \ denite#do_map('toggle_select').'j'
- " endfunction
- " 
- " 
- " " ripgrep
- " set grepprg=rg\ --vimgrep
- " let g:ackprg='rg --vimgrep --no-heading'
- " map <Leader>g :Rg
- " 
- " let g:fuzzy_ignore = '.o;.obj;.bak;.exe;.pyc;.pyo;.DS_Store;.db;.orig;.sql;.doc;*.*.pyc'
- " command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" --glob "!node_modules/*" --glob "!.git/*" --glob "!node_modules" '.shellescape(<q-args>), 1, <bang>0)
- " " command! -bang -nargs=* Find call FZF#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
- " map <Leader>g :Find 
- " 
- " "set Directory for swap and backup files
- " set dir=/tmp
- " 
- " " Put these lines at the very end of your vimrc file.
- " 
- " " Load all plugins now.
- " " Plugins need to be added to runtimepath before helptags can be generated.
- " packloadall
+imap zz import pudb<CR>pudb.set_trace()
+
+ " Change which file opens after executing :Rails command
+ " ****************************************
+ " let g:rails_default_file='config/database.yml'
+
+ " Insert New Line *************************************************************
+ map <S-Enter> O<ESC> " awesome, inserts new line without going into insert mode
+ map <Enter> o<ESC>
+
+
+ " -----------------------------------------------------------------------------
+ " |                              Plug-ins                                     |
+ " -----------------------------------------------------------------------------
+
+ " NERDTree ********************************************************************
+ :noremap <Leader>n :NERDTreeToggle<CR>
+ let NERDTreeHijackNetrw=1 " User instead of Netrw when doing an edit /foobar
+ let NERDTreeMouseMode=1 " Single click for everything
+ let NERDTreeShowHidden=1
+ let g:vroom_map_keys = 0
+
+ :noremap <Leader>z :NERDTreeFind<CR>
+ nnoremap ,m :w <BAR> !lessc % > %:t:r.css<CR><space>
+
+ " wildfire  ******************************************************************
+ " This selects the next closest text object.
+ let g:wildfire_fuel_map = "<TAB>"
+
+ " This selects the previous closest text object.
+ let g:wildfire_water_map = "<BS>"
+
+ " SplitJoin ******************************************************************
+ nmap <Leader>sj :SplitjoinJoin<cr>
+ nmap <Leader>ss :SplitjoinSplit<cr>
+
+ " Tmux Navigation **********************************************************
+ let g:tmux_navigator_no_mappings = 1
+
+ nnoremap <silent> <Leader>" :TmuxNavigateLeft<cr>
+ nnoremap <silent> <Leader>m :TmuxNavigateDown<cr>
+ nnoremap <silent> <Leader>u :TmuxNavigateUp<cr>
+ " nnoremap <silent>  :TmuxNavigateRight<cr>
+ " nnoremap <silent>  :TmuxNavigatePrevious<cr>
+
+ " Plugin key-mappings.
+ " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+ xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+ " Enable snipMate compatibility feature.
+ let g:neosnippet#enable_snipmate_compatibility = 1
+
+ " For conceal markers.
+ " For hiding quotes and double quotes
+ if has('conceal')
+   set conceallevel=0 concealcursor=niv
+ endif
+
+ let g:python_host_prog=$HOME.'/.local/share/virtualenvs/vim2/bin/python2'
+
+ let g:python3_host_prog=$HOME.'/.local/share/virtualenvs/vim3/bin/python3'
+ let g:python3host_prog=$HOME.'/.local/share/virtualenvs/vim3/bin/python3'
+
+ let g:syntastic_always_populate_loc_list = 1
+ let g:syntastic_auto_loc_list = 1
+ let g:syntastic_check_on_open = 1
+ let g:syntastic_check_on_wq = 0
+
+ " (Optional)Remove Info(Preview) window
+ set completeopt-=preview
+
+ " (Optional)Hide Info(Preview) window after completions
+ autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+ 
+  " (Optional) Enable terraform plan to be include in filter
+  let g:syntastic_terraform_tffilter_plan = 1
+ 
+  " Formatting the sucker
+  let g:terraform_fmt_on_save=1
+ 
+ 
+  " (Optional) Default: 0, enable(1)/disable(0) plugin's keymapping
+  let g:terraform_completion_keys = 1
+ 
+  " # END TF Config
+ 
+  let g:flake8_show_in_file=1  " show
+  let g:flake8_show_in_gutter=1  " show
+  let g:flake8_show_quickfix=1  " show (default)
+  let g:flake8_error_marker='EE'     " set error marker to 'EE'
+  let g:flake8_warning_marker='WW'   " set warning marker to 'WW
+ 
+  " Supertab go down not up
+  let g:SuperTabDefaultCompletionType = "<c-n>"
+ 
+  " TypeScript
+  let g:nvim_typescript#javascript_support = 1
+ 
+  " Turn on line guides
+  let g:indent_guides_enable_on_vim_startup = 1
+ 
+ 
+  autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+ 
+  " Ale ES Linter
+  let g:ale_fixers = {
+        \   'javascript': ['eslint'],
+        \   'python3': ['black', 'autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf'],
+        \   'python': ['black','autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf'],
+        \   'ruby': ['remove_trailing_lines', 'rufo', 'sorbet', 'trim_whitespace', 'rubocop'],
+        \}
+ 
+  let g:ale_completion_enabled = 0
+  let g:ale_sign_column_always = 1
+  let g:ale_lint_on_enter = 1
+  let g:ale_python_flake8_auto_pipenv = 1
+  let g:ale_fix_on_save = 1
+ 
+  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+  let g:ale_sign_error = '✘'
+  let g:ale_sign_warning = '⚠'
+ 
+  nmap <silent> <C-e> <Plug>(ale_next_wrap)
+ 
+ 
+    function! LinterStatus() abort
+      let l:counts = ale#statusline#Count(bufnr(''))
+      let l:all_errors = l:counts.error + l:counts.style_error
+      let l:all_non_errors = l:counts.total - l:all_errors
+      return l:counts.total == 0 ? 'OK' : printf(
+            \   '%d⨉ %d⚠ ',
+            \   all_errors,
+            \   all_non_errors
+            \)
+    endfunction
+  
+  
+  " HTML Auto Close
+  let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.ts'
+  let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+  
+  :map <Leader>c :Commentary<CR>
+  
+  " FZF Settings
+  " set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.orig,*/public/assets/*,venv/*,node_modules/*
+  map <Leader>f :GFiles<CR>
+  map <Leader>t :Tags<CR>
+  map <Leader>b :Buffers<CR>
+  
+  " Define mappings
+  autocmd FileType denite call s:denite_my_settings()
+  function! s:denite_my_settings() abort
+    nnoremap <silent><buffer><expr> <CR>
+    \ denite#do_map('do_action')
+  
+    nnoremap <silent><buffer><expr> p
+    \ denite#do_map('do_action', 'preview')
+  
+    nnoremap <silent><buffer><expr> q
+    \ denite#do_map('quit')
+  
+    nnoremap <silent><buffer><expr> i
+    \ denite#do_map('open_filter_buffer')
+  
+    nnoremap <silent><buffer><expr> <Space>
+    \ denite#do_map('toggle_select').'j'
+  endfunction
+  
+  
+  " ripgrep
+  set grepprg=rg\ --vimgrep
+  let g:ackprg='rg --vimgrep --no-heading'
+  map <Leader>g :Rg
+  
+  let g:fuzzy_ignore = '.o;.obj;.bak;.exe;.pyc;.pyo;.DS_Store;.db;.orig;.sql;.doc;*.*.pyc'
+  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" --glob "!node_modules/*" --glob "!.git/*" --glob "!node_modules" '.shellescape(<q-args>), 1, <bang>0)
+  " command! -bang -nargs=* Find call FZF#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+  map <Leader>g :Find 
+  
+  "set Directory for swap and backup files
+  set dir=/tmp
+  
+  " Put these lines at the very end of your vimrc file.
+  
+  " Load all plugins now.
+  " Plugins need to be added to runtimepath before helptags can be generated.
+  packloadall
 
 " Load all of the helptags now, after plugins have been loaded.
 " All messages and errors will be ignored.
