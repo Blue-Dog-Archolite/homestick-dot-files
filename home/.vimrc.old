@@ -1,6 +1,78 @@
 filetype off                  " required
 set shell=/bin/sh
 
+
+call plug#begin()
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
+
+" Make sure you use single quotes
+
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+
+  Plug 'Shougo/denite.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+
+  Plug 'AndrewRadev/splitjoin.vim'
+  Plug 'Raimondi/delimitMate'
+  Plug 'Shougo/vimproc.vim', {'build' : 'make'}
+  Plug 'vim-airline/vim-airline'
+
+  Plug 'janko-m/vim-test'
+  Plug 'kien/ctrlp.vim'
+  Plug 'ludovicchabant/vim-gutentags'
+  Plug 'skywind3000/gutentags_plus'
+  Plug 'majutsushi/tagbar'
+  Plug 'scrooloose/nerdtree'
+  Plug 'tomtom/tlib_vim'
+  Plug 'farmergreg/vim-lastplace'
+  Plug 'machakann/vim-highlightedyank'
+  " call dein#add('reconquest/vim-pythonx')
+
+
+  " Select blocks based on indent
+  Plug 'gcmt/wildfire.vim'
+  Plug 'tpope/vim-abolish'
+  Plug 'tpope/vim-haml'
+  Plug 'tpope/vim-surround'
+
+
+" Any valid git URL is allowed
+Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+
+" Multiple Plug commands can be written in a single line using | separators
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Using a non-default branch
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+
+" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+Plug 'fatih/vim-go', { 'tag': '*' }
+
+" Plugin options
+Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+
+" Plugin outside ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" Unmanaged plugin (manually installed and updated)
+Plug '~/my-prototype-plugin'
+
+" Initialize plugin system
+call plug#end()
+
+
 "dein Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
@@ -12,12 +84,66 @@ set runtimepath+=$HOME/tools/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+  call dein#add('vim-airline/vim-airline')
+
+  call dein#add('janko-m/vim-test')
+  call dein#add('kien/ctrlp.vim')
+  call dein#add('ludovicchabant/vim-gutentags')
+  call dein#add('skywind3000/gutentags_plus')
+  call dein#add('majutsushi/tagbar')
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('tomtom/tlib_vim')
+  call dein#add('farmergreg/vim-lastplace')
+  call dein#add('machakann/vim-highlightedyank')
+  " call dein#add('reconquest/vim-pythonx')
+
+
+  " Select blocks based on indent
+  call dein#add('gcmt/wildfire.vim')
+
+  " Search and Replace
+  call dein#add('tpope/vim-abolish.git')
+  call dein#add('tpope/vim-haml')
+  call dein#add('tpope/vim-surround')
+
+  " Git
+  call dein#add('rhysd/committia.vim')
+  call dein#add('Xuyuanp/nerdtree-git-plugin')
+  call dein#add('tpope/vim-commentary')
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('tpope/vim-rhubarb')
+
+  call dein#add('vim-scripts/Align')
+  call dein#add('junegunn/vim-easy-align')
+  call dein#add('vim-scripts/L9')
+  call dein#add('vim-scripts/matchit.zip')
+  call dein#add('vim-scripts/taglist.vim')
+
+  " EditorConfig files
+  call dein#add('editorconfig/editorconfig-vim')
+
+  " Terraform
+  call dein#add('hashivim/vim-terraform')
+  call dein#add('juliosueiras/vim-terraform-completion')
+
+  " Searching
+  call dein#add('vim-scripts/FuzzyFinder')
+  call dein#add('rking/ag.vim')
+  call dein#add('jremmen/vim-ripgrep')
+  call dein#add('jlanzarotta/bufexplorer')
+  call dein#add('mileszs/ack.vim')
+  call dein#add('skwp/greplace.vim')
+
+  " FZF Vim
+  " call dein#add('junegunn/fzf', { 'build': './install --all', 'rtp': '' })
+  call dein#add('junegunn/fzf', { 'build': './install', 'merged': 0 })
+  call dein#add('junegunn/fzf.vim')
 
   " Z for vim
   call dein#add('easymotion/vim-easymotion')
 
   " Specify FZF bash location
-  set rtp+=/home/rmeyer/.linuxbrew/bin/fzf
+  set rtp+=/usr/local/bin/fzf
 
   " Networking support and scripting plugin
   call dein#add('eiginn/netrw')
@@ -44,11 +170,10 @@ set runtimepath+=$HOME/tools/dein/repos/github.com/Shougo/dein.vim
 
   " Linters
   call dein#add('w0rp/ale')
-  call dein#add('psf/black', { 'rev': 'ce14fa8b497bae2b50ec48b3bd7022573a59cdb1' })
 
   " Completion
   call dein#add('ervandew/supertab')
-  call dein#add('neoclide/coc.nvim', { 'merged': 0 })
+  call dein#add('neoclide/coc.nvim', { 'merged': 0, 'rev': 'release' })
   " call dein#add('python-rope/ropevim')
 
   " Rails / Ruby
@@ -295,8 +420,8 @@ highlight Pmenu ctermbg=238 gui=bold
 
 " Removes trailing spaces
 autocmd BufWritePre *.rb :%s/\s\+$//e
-autocmd BufRead *.py execute ':Black'
-autocmd BufWritePre *.py execute ':Black'
+" autocmd BufRead *.py execute ':Black'
+" autocmd BufWritePre *.py execute ':Black'
 
 function TrimWhiteSpace()
   %s/\s*$//
@@ -385,6 +510,8 @@ function TrimWhiteSpace()
   :noremap <Leader>\ :TagbarToggle<CR>
   :noremap <Leader>j :TagbarToggle<CR>
 
+  :noremap <Leader>pp :echo @%<CR>
+
 
 
   " Cursor cross-hairs highlights ***********************************************************
@@ -406,7 +533,7 @@ function TrimWhiteSpace()
   inoremap <F8> <ESC>mzgg=G`z<Insert>
 
   " Colors **********************************************************************
-  set background=dark
+  " set background=dark
   syntax on " syntax highlighting
 
   if has('gui_running')
@@ -470,7 +597,8 @@ function TrimWhiteSpace()
   " map <F5> :!ruby %<CR>
 
   " let g:ruby_host_prog = $HOME+'/.asdf/installs/ruby/2.7.2/bin/neovim-ruby-host'
-  let g:ruby_host_prog = '/Users/rmeyer/.asdf/installs/ruby/2.7.2/lib/ruby/gems/2.7.0/gems/neovim-0.8.1/exe/neovim-ruby-host'
+  " let g:ruby_host_prog = '/Users/rmeyer/.asdf/installs/ruby/2.7.2/lib/ruby/gems/2.7.0/gems/neovim-0.8.1/exe/neovim-ruby-host'
+  let g:ruby_host_prog = '/Users/robert.r.meyer/.rvm/gems/ruby-2.7.4/bin/neovim-ruby-host'
 
   " Hard to type *****************************************************************
   imap hh =>
@@ -611,8 +739,6 @@ function TrimWhiteSpace()
   " Ale ES Linter
   let g:ale_fixers = {
         \   'javascript': ['eslint'],
-        \   'python3': ['black', 'autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf'],
-        \   'python': ['black','autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf'],
         \   'ruby': ['remove_trailing_lines', 'rufo', 'sorbet', 'trim_whitespace', 'rubocop'],
         \}
 
@@ -631,8 +757,6 @@ function TrimWhiteSpace()
 
  let g:ale_fixers = {
  \   'javascript': ['eslint'],
- \   'python3': ['black', 'autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf'],
- \   'python': ['black', 'autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf'],
  \}
 
   function! LinterStatus() abort

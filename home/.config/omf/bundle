@@ -1,10 +1,15 @@
 package asdf
+package bang-bang
 package bass
 package direnv
 package fasd
+package foreign-env
 package fzf
+package git-flow
 package keychain
 package linuxbrew
+package nvm
+package rvm
 package z
 theme default
 theme zish
