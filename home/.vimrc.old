@@ -11,73 +11,7 @@ endif
 set runtimepath+=$HOME/tools/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state($HOME.'/tools/dein')
-  call dein#begin($HOME.'/tools/dein/')
-
-  " Let dein manage dein
-  " Required:
-  call dein#add($HOME.'/tools/dein/repos/github.com/Shougo/dein.vim')
-
-  call dein#add('Shougo/denite.nvim')
-  call dein#add('roxma/nvim-yarp')
-  call dein#add('roxma/vim-hug-neovim-rpc')
-
-  " Tools
-  call dein#add('AndrewRadev/splitjoin.vim')
-  call dein#add('Raimondi/delimitMate')
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
-  call dein#add('vim-airline/vim-airline')
-  call dein#add('janko-m/vim-test')
-  call dein#add('kien/ctrlp.vim')
-  call dein#add('ludovicchabant/vim-gutentags')
-  call dein#add('skywind3000/gutentags_plus')
-  call dein#add('majutsushi/tagbar')
-  call dein#add('scrooloose/nerdtree')
-  call dein#add('tomtom/tlib_vim')
-  call dein#add('farmergreg/vim-lastplace')
-  call dein#add('machakann/vim-highlightedyank')
-
-
-  " Select blocks based on indent
-  call dein#add('gcmt/wildfire.vim')
-
-  " Search and Replace
-  call dein#add('tpope/vim-abolish.git')
-  call dein#add('tpope/vim-haml')
-  call dein#add('tpope/vim-surround')
-
-  " Git
-  call dein#add('rhysd/committia.vim')
-  call dein#add('Xuyuanp/nerdtree-git-plugin')
-  call dein#add('tpope/vim-commentary')
-  call dein#add('tpope/vim-fugitive')
-  call dein#add('tpope/vim-rhubarb')
-
-  call dein#add('vim-scripts/Align')
-  call dein#add('junegunn/vim-easy-align')
-  call dein#add('vim-scripts/L9')
-  call dein#add('vim-scripts/matchit.zip')
-  call dein#add('vim-scripts/taglist.vim')
-
-  " EditorConfig files
-  call dein#add('editorconfig/editorconfig-vim')
-
-  " Terraform
-  call dein#add('hashivim/vim-terraform')
-  call dein#add('juliosueiras/vim-terraform-completion')
-
-  " Searching
-  call dein#add('vim-scripts/FuzzyFinder')
-  call dein#add('rking/ag.vim')
-  call dein#add('jremmen/vim-ripgrep')
-  call dein#add('jlanzarotta/bufexplorer')
-  call dein#add('mileszs/ack.vim')
-  call dein#add('skwp/greplace.vim')
-
-  " FZF Vim
-  " call dein#add('junegunn/fzf', { 'build': './install --all', 'rtp': '' })
-  call dein#add('junegunn/fzf', { 'build': './install', 'merged': 0 })
-  call dein#add('junegunn/fzf.vim')
 
   " Z for vim
   call dein#add('easymotion/vim-easymotion')
