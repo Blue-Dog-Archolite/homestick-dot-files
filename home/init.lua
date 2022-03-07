@@ -377,14 +377,9 @@ vim.cmd([[
 
  " Indents
  let g:rainbow_active = 1
- " au VimEnter * RainbowParentheses
- " au Syntax * RainbowParenthesesLoadRound
- " au Syntax * RainbowParenthesesLoadSquare
- " au Syntax * RainbowParenthesesLoadBraces
 
  autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
  " for html
- " autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
  autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
  " for css or scss
  autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
@@ -482,13 +477,6 @@ filetype plugin on " Enable filetype-specific plugins
 " let g:ruby_host_prog = $HOME+'/.asdf/installs/ruby/2.7.2/bin/neovim-ruby-host'
 " let g:ruby_host_prog = '/Users/rmeyer/.asdf/installs/ruby/2.7.2/lib/ruby/gems/2.7.0/gems/neovim-0.8.1/exe/neovim-ruby-host'
 
-" Hard to type *****************************************************************
-imap hh =>
-imap kk ->
-imap aa @
-imap zz binding.pry
-imap ;; """"<CR><CR>"""
-imap zz import pudb<CR>pudb.set_trace()
 
  " Change which file opens after executing :Rails command
  " ****************************************
@@ -497,7 +485,6 @@ imap zz import pudb<CR>pudb.set_trace()
  " Insert New Line *************************************************************
  map <S-Enter> O<ESC> " awesome, inserts new line without going into insert mode
  map <Enter> o<ESC>
-
 
  " -----------------------------------------------------------------------------
  " |                              Plug-ins                                     |
