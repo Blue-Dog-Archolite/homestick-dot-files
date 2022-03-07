@@ -6,7 +6,10 @@ local Plug = vim.fn['plug#']
 
 Plug 'tpope/vim-sensible'
 
-Plug 'Shougo/denite.nvim'
+Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 
@@ -20,6 +23,9 @@ Plug 'kien/ctrlp.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'skywind3000/gutentags_plus'
 Plug 'majutsushi/tagbar'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'folke/which-key.nvim'
+Plug 'b0o/mapx.nvim'
 
 
 Plug 'scrooloose/nerdtree'
@@ -133,7 +139,9 @@ Plug 'roxma/vim-hug-neovim-rpc'
 
 -- Build Requires
 Plug('Shougo/vimproc.vim', {['do']= 'make'})
-Plug 'psf/black' --, { 'rev': 'ce14fa8b497bae2b50ec48b3bd7022573a59cdb1' })
+Plug('psf/black')
+-- Black version control
+-- , { 'rev': 'ce14fa8b497bae2b50ec48b3bd7022573a59cdb1' })
 Plug('neoclide/coc.nvim', {['do'] ='yarn install --frozen-lockfile'})
 
 vim.call('plug#end')
@@ -143,34 +151,71 @@ vim.call('plug#end')
 vim.o.smartcase = true
 vim.o.incsearch = true
 vim.o.hlsearch = true
+
+vim.g.mapleader = ","
+
+vim.opt.wrap = false
+vim.opt.shell = "/bin/bash"
+vim.opt.filetype = "off"
+
+vim.opt.autowrite = true    -- Writes on make/shell commands
+
+-- "Before merge of files these existed
+vim.cmd("set cf")  -- set cf " Enable error files & error jumping.
+
+vim.cmd("syntax enable")
+vim.cmd("set timeoutlen=250")
+vim.cmd("set history=1024")        -- Number of things to remember in history.
+
+vim.opt.cf = false
+
+require'mapx'.setup{ global = true, whichkey = true }
+
+-- Hard to type *****************************************************************
+imap("hh", "=>", "HashRocket")
+imap("kk", "->", "Arrow")
+imap("aa", "@", "At Sign")
+imap("zz", "binding.pry", "Setup binding.pry for ruby")
+imap("zz", "import pudb<CR>pudb.set_trace()", "Set up debugging for python")
+nnoremap("nnoremap Q", "<nop>", "Don't let Q do ANYTHING")
+
+-- TODO Add WhichKey Group Names
+local noremap_functions = {
+  f = ":GFiles<CR> ",
+  t = ":Tags<CR>",
+  c = ":Commentary<CR>",
+  b = ":Buffers<CR>",
+  g = ":Find ",
+  w = ":WhichKey ",
+  r = ":edit!<CR>",
+  v = ":vsp^M^W^W<cr>",
+  h =  ":split^M^W^W<cr>",
+}
+
+for key, command in pairs(noremap_functions) do
+  nnoremap('n', string.format('<Leader>%s', key), command)
+end
+
+-- " Turn off Ex mode forever
+ -- Required
+vim.cmd("filetype plugin indent on")
+
 vim.o.ignorecase = true
 
-
 vim.cmd([[
- set shell=/bin/sh
- filetype off
+ "set Directory for swap and backup files
+ set dir=/tmp
 
  if &compatible
    set nocompatible               " Be iMproved
  endif
 
- " Required
- filetype plugin indent on
- syntax enable
-
- "Before merge of files these existed
- set cf                  " Enable error files & error jumping.
+ " syntax enable
 
  if has('unnamedplus')
    set clipboard=unnamed,unnamedplus
    set clipboard+=unnamed  " Yanks go on clipboard instead.
  endif
-
- set history=1024        " Number of things to remember in history.
- set autowrite           " Writes on make/shell commands
- set timeoutlen=250      " Time to wait after ESC (default causes an annoying delay)
-
-
  ]])
 
 
@@ -179,39 +224,25 @@ vim.cmd([[
 
 vim.cmd([[
  " Coc.Vim
- let g:coc_global_extensions = ['coc-syntax', 'coc-post', 'coc-neosnippet', 'coc-html', 'coc-dictionary', 'coc-tsserver', 'coc-solargraph', 'coc-phpls', 'coc-json', 'coc-docker', 'coc-word', 'coc-ultisnips', 'coc-tag' ]
-
-
- " Status Bar
- set laststatus=2  " Always show status line.
-
- " Editor Config plays nicely with TPope Fugitive
- let g:EditorConfig_exclude_patterns = ['fugitive://.\*']
-
- " Gutentags
- " enable gtags module
- let g:gutentags_modules = ['ctags', 'gtags_cscope']
-
- " config project root markers.
- let g:gutentags_project_root = ['.git']
-
- " generate datebases in my cache directory, prevent gtags files polluting my project
- let g:gutentags_cache_dir = expand('~/tags')
-
- " change focus to quickfix window after search (optional).
- let g:gutentags_plus_switch = 1
- let g:gutentags_generate_on_new = 1
- let g:gutentags_generate_on_missing = 1
- let g:gutentags_generate_on_write = 1
- let g:gutentags_generate_on_empty_buffer = 0
- " let g:gutentags_trace = 1
-
- let g:gutentags_ctags_extra_args = [
-       \ '--tag-relative=yes',
-       \ '--fields=+ailmnS',
+ let g:coc_global_extensions = [
+       \'coc-syntax',
+       \'coc-lua',
+       \ 'coc-post',
+       \ 'coc-html',
+       \ 'coc-dictionary',
+       \ 'coc-tsserver',
+       \ 'coc-solargraph',
+       \ 'coc-phpls',
+       \ 'coc-json',
+       \ 'coc-docker',
+       \ 'coc-word',
+       \ 'coc-ultisnips',
+       \ 'coc-tag'
        \ ]
+]])
 
 
+vim.cmd([[
  " #######################################################################
  " Airline Vim Tagbar Setup
  " if you want to disable auto detect, comment out those two lines
@@ -225,14 +256,19 @@ vim.cmd([[
  set cindent
  set autoindent
  set smarttab
+
  set expandtab
- set wrap
+ set tabstop=2
 
  set smartindent
- set tabstop=4
+ " set tabstop=4
+ " set expandtab
  set shiftwidth=4
- set expandtab
 
+ ]])
+
+
+vim.cmd([[
  " Visual
  " set showmatch  " Show matching brackets.
  set mat=5  " Bracket blinking.
@@ -280,16 +316,7 @@ vim.cmd([[
  " |  Ctrl-Left_MouseClick - Go to definition                                  |
  " |  Ctrl-Right_MouseClick - Jump back from definition                        |
 
- "Set Mapping to ,
- "**********************************************************
- let mapleader = ","
 
- "Use jj as escape .. Eaiser?
- imap jj <ESC>
- imap jk <Esc>
-
- nnoremap <Leader>w :w<CR>
- nnoremap <Leader>r :edit!<CR>
 
  vmap <Leader>y "+y
  vmap <Leader>d "+d
@@ -298,6 +325,10 @@ vim.cmd([[
  vmap <Leader>p "+p
  vmap <Leader>P "+P
 
+ ]])
+
+
+vim.cmd([[
  " Rspec
  map <Leader>t :call RunCurrentSpecFile()<CR>
  map <Leader>s :call RunNearestSpec()<CR>
@@ -315,14 +346,14 @@ vim.cmd([[
  highlight Pmenu ctermbg=238 gui=bold
 
  " Removes trailing spaces
- autocmd BufWritePre *.rb :%s/\s\+$//e
+ " BufWritePre * :%s/\s\+$//e
  autocmd BufRead *.py execute ':Black'
  autocmd BufWritePre *.py execute ':Black'
 
- " 
+ "
  "   map <F3> :call FormatJSON()<CR>
- " 
- " 
+ "
+ "
   " Show quotes in JSON
   set conceallevel=0
 
@@ -379,18 +410,9 @@ vim.cmd([[
  set equalalways " Multiple windows, when created, are equal in size
  set splitbelow splitright
 
- " Turn off Ex mode forever
- nnoremap Q <nop>
-
- " Vertical and horizontal split then hop to a new buffer
- :noremap <Leader>v :vsp^M^W^W<cr>
- :noremap <Leader>h :split^M^W^W<cr>
-
- :noremap <Leader>\ :TagbarToggle<CR>
- :noremap <Leader>j :TagbarToggle<CR>
- " 
- " 
- " 
+ "
+ "
+ "
 " Cursor cross-hairs highlights ***********************************************************
 au WinLeave * set nocursorline nocursorcolumn
 au WinEnter * set cursorline cursorcolumn
@@ -410,7 +432,8 @@ inoremap <F8> <ESC>mzgg=G`z<Insert>
  syntax on " syntax highlighting
 
  if has('gui_running')
-   colorscheme ir_black
+   " colorscheme ir_black
+   colorscheme wombat
    set mouse=a
    set nofoldenable " Turn off folding
    set lazyredraw "faster processing
@@ -432,7 +455,7 @@ inoremap <F8> <ESC>mzgg=G`z<Insert>
 set showcmd
 set ruler " Show ruler
 " set ch=2 " Make command line two lines high
-" match LongLineWarning '\%120v.*' " Error format when a line is longer than 120
+match LongLineWarning '\%120v.*' " Error format when a line is longer than 120
 
 
 " Line Wrapping ***************************************************************
@@ -554,37 +577,37 @@ imap zz import pudb<CR>pudb.set_trace()
  " (Optional)Hide Info(Preview) window after completions
  autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
  autocmd InsertLeave * if pumvisible() == 0|pclose|endif
- 
+
   " (Optional) Enable terraform plan to be include in filter
   let g:syntastic_terraform_tffilter_plan = 1
- 
+
   " Formatting the sucker
   let g:terraform_fmt_on_save=1
- 
- 
+
+
   " (Optional) Default: 0, enable(1)/disable(0) plugin's keymapping
   let g:terraform_completion_keys = 1
- 
+
   " # END TF Config
- 
+
   let g:flake8_show_in_file=1  " show
   let g:flake8_show_in_gutter=1  " show
   let g:flake8_show_quickfix=1  " show (default)
   let g:flake8_error_marker='EE'     " set error marker to 'EE'
   let g:flake8_warning_marker='WW'   " set warning marker to 'WW
- 
+
   " Supertab go down not up
   let g:SuperTabDefaultCompletionType = "<c-n>"
- 
+
   " TypeScript
   let g:nvim_typescript#javascript_support = 1
- 
+
   " Turn on line guides
   let g:indent_guides_enable_on_vim_startup = 1
- 
- 
+
+
   autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
- 
+
   " Ale ES Linter
   let g:ale_fixers = {
         \   'javascript': ['eslint'],
@@ -592,20 +615,20 @@ imap zz import pudb<CR>pudb.set_trace()
         \   'python': ['black','autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf'],
         \   'ruby': ['remove_trailing_lines', 'rufo', 'sorbet', 'trim_whitespace', 'rubocop'],
         \}
- 
+
   let g:ale_completion_enabled = 0
   let g:ale_sign_column_always = 1
   let g:ale_lint_on_enter = 1
   let g:ale_python_flake8_auto_pipenv = 1
   let g:ale_fix_on_save = 1
- 
+
   let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
   let g:ale_sign_error = '✘'
   let g:ale_sign_warning = '⚠'
- 
+
   nmap <silent> <C-e> <Plug>(ale_next_wrap)
- 
- 
+
+
     function! LinterStatus() abort
       let l:counts = ale#statusline#Count(bufnr(''))
       let l:all_errors = l:counts.error + l:counts.style_error
@@ -616,59 +639,30 @@ imap zz import pudb<CR>pudb.set_trace()
             \   all_non_errors
             \)
     endfunction
-  
-  
+
+
   " HTML Auto Close
   let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.ts'
   let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
-  
-  :map <Leader>c :Commentary<CR>
-  
-  " FZF Settings
-  " set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.orig,*/public/assets/*,venv/*,node_modules/*
-  map <Leader>f :GFiles<CR>
-  map <Leader>t :Tags<CR>
-  map <Leader>b :Buffers<CR>
-  
-  " Define mappings
-  autocmd FileType denite call s:denite_my_settings()
-  function! s:denite_my_settings() abort
-    nnoremap <silent><buffer><expr> <CR>
-    \ denite#do_map('do_action')
-  
-    nnoremap <silent><buffer><expr> p
-    \ denite#do_map('do_action', 'preview')
-  
-    nnoremap <silent><buffer><expr> q
-    \ denite#do_map('quit')
-  
-    nnoremap <silent><buffer><expr> i
-    \ denite#do_map('open_filter_buffer')
-  
-    nnoremap <silent><buffer><expr> <Space>
-    \ denite#do_map('toggle_select').'j'
-  endfunction
-  
-  
+
+
   " ripgrep
   set grepprg=rg\ --vimgrep
   let g:ackprg='rg --vimgrep --no-heading'
-  map <Leader>g :Rg
-  
+  " map <Leader>g :Rg
+
   let g:fuzzy_ignore = '.o;.obj;.bak;.exe;.pyc;.pyo;.DS_Store;.db;.orig;.sql;.doc;*.*.pyc'
   command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" --glob "!node_modules/*" --glob "!.git/*" --glob "!node_modules" '.shellescape(<q-args>), 1, <bang>0)
   " command! -bang -nargs=* Find call FZF#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
-  map <Leader>g :Find 
-  
-  "set Directory for swap and backup files
-  set dir=/tmp
-  
+  " map <Leader>g :Find
+
+
   " Put these lines at the very end of your vimrc file.
-  
+
   " Load all plugins now.
   " Plugins need to be added to runtimepath before helptags can be generated.
   packloadall
-
+ 
 " Load all of the helptags now, after plugins have been loaded.
 " All messages and errors will be ignored.
 silent! helptags ALL
