@@ -167,8 +167,6 @@ vim.cmd("syntax enable")
 vim.cmd("set timeoutlen=250")
 vim.cmd("set history=1024")        -- Number of things to remember in history.
 
-vim.opt.cf = false
-
 require'mapx'.setup{ global = true, whichkey = true }
 
 -- Hard to type *****************************************************************
@@ -200,7 +198,7 @@ end
  -- Required
 vim.cmd("filetype plugin indent on")
 
-vim.o.ignorecase = true
+vim.opt.ignorecase = true
 
 vim.cmd([[
  "set Directory for swap and backup files
@@ -242,6 +240,25 @@ vim.cmd([[
 ]])
 
 
+
+-- Global Options
+vim.opt.cindent = false
+vim.opt.autoindent = false
+vim.opt.smarttab = false
+vim.opt.expandtab = false
+vim.opt.tabstop = 2
+vim.opt.smartindent = false
+vim.opt.shiftwidth=4
+
+-- Visual
+vim.opt.mat = 5  -- Bracket blinking.
+vim.opt.list = false
+
+--vim.o.novisualbell = false  -- No blinking .
+--vim.o.noerrorbells = false  -- No noise.
+
+
+
 vim.cmd([[
  " #######################################################################
  " Airline Vim Tagbar Setup
@@ -249,97 +266,67 @@ vim.cmd([[
  "let g:airline#extensions#disable_rtp_load = 1
  let g:airline_extensions = ['branch', 'hunks', 'coc']
 
- set nocp
  set cinoptions=:0,p0,t0
  set cinwords=if,else,while,do,for,switch,case
  set formatoptions=tcqr
- set cindent
- set autoindent
- set smarttab
-
- set expandtab
- set tabstop=2
-
- set smartindent
- " set tabstop=4
- " set expandtab
- set shiftwidth=4
-
  ]])
 
 
-vim.cmd([[
- " Visual
- " set showmatch  " Show matching brackets.
- set mat=5  " Bracket blinking.
- set list
+-------------------------------------------------------------------------------
+--|                            VIM Settings                                   |
+--|                   (see gvimrc for gui vim settings)                       |
+--|                                                                           |
+--| Some highlights:                                                          |
+--|   jj = <esc>  Very useful for keeping your hands on the home row          |
+--|   ,n = toggle NERDTree off and on                                         |
+--|                                                                           |
+--|   ,f = fuzzy find all files                                               |
+--|   ,b = fuzzy find in all buffers                                          |
+--|   ,p = go to previous file                                                |
+--|                                                                           |
+--|   hh = inserts '=>'                                                       |
+--|   aa = inserts '@'                                                        |
+--|                                                                           |
+--|   ,h = new horizontal window                                              |
+--|   ,v = new vertical window                                                |
+--|                                                                           |
+--|   ,i = toggle invisibles                                                  |
+--|                                                                           |
+--|   enter and shift-enter = adds a new line after/before the current line   |
+--|                                                                           |
+--|   :call Tabstyle_tabs = set tab to real tabs                              |
+--|   :call Tabstyle_spaces = set tab to 2 spaces                             |
+--|                                                                           |
+--| Put machine/user specific settings in ~/.vimrc.local                      |
+--|  CTAGS  C-] - go to definition                                            |
+--|  C-T - Jump back from the definition.                                     |
+--|  C-W C-] - Open the definition in a horizontal split                      |
+--|  C-\ - Open the definition in a new tab                                   |
+--|  A-] - Open the definition in a vertical split                            |
+--|
+--|  After the tags are generated. You can use the following keys to tag into and tag out of functions:
+--|
+--|  Ctrl-Left_MouseClick - Go to definition                                  |
+--|  Ctrl-Right_MouseClick - Jump back from definition                        |
 
- " Show $ at end of line and trailing space as ~
- set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
- set novisualbell  " No blinking .
- set noerrorbells  " No noise.
+nmap("<Leader>P", "+P")
+nmap("<Leader>p", "+p")
+vmap("<Leader>P", "+P")
+vmap("<Leader>d", "+d")
+vmap("<Leader>p", "+p")
+vmap("<Leader>y", "+y")
 
- " -----------------------------------------------------------------------------
- " |                            VIM Settings                                   |
- " |                   (see gvimrc for gui vim settings)                       |
- " |                                                                           |
- " | Some highlights:                                                          |
- " |   jj = <esc>  Very useful for keeping your hands on the home row          |
- " |   ,n = toggle NERDTree off and on                                         |
- " |                                                                           |
- " |   ,f = fuzzy find all files                                               |
- " |   ,b = fuzzy find in all buffers                                          |
- " |   ,p = go to previous file                                                |
- " |                                                                           |
- " |   hh = inserts '=>'                                                       |
- " |   aa = inserts '@'                                                        |
- " |                                                                           |
- " |   ,h = new horizontal window                                              |
- " |   ,v = new vertical window                                                |
- " |                                                                           |
- " |   ,i = toggle invisibles                                                  |
- " |                                                                           |
- " |   enter and shift-enter = adds a new line after/before the current line   |
- " |                                                                           |
- " |   :call Tabstyle_tabs = set tab to real tabs                              |
- " |   :call Tabstyle_spaces = set tab to 2 spaces                             |
- " |                                                                           |
- " | Put machine/user specific settings in ~/.vimrc.local                      |
- " |  CTAGS  C-] - go to definition                                            |
- " |  C-T - Jump back from the definition.                                     |
- " |  C-W C-] - Open the definition in a horizontal split                      |
- " |  C-\ - Open the definition in a new tab                                   |
- " |  A-] - Open the definition in a vertical split                            |
- " |
- " |  After the tags are generated. You can use the following keys to tag into and tag out of functions:
- " |
- " |  Ctrl-Left_MouseClick - Go to definition                                  |
- " |  Ctrl-Right_MouseClick - Jump back from definition                        |
+-- Rspec
+map("Leader>t", ":call RunCurrentSpecFile()<CR>")
+map("Leader>s", ":call RunNearestSpec()<CR>")
+map("Leader>l", ":call RunLastSpec()<CR>")
+map("Leader>a", ":call RunAllSpecs()<CR>")
 
+vim.g.rspec_command = "bundle exec rspec --drb {spec}"
 
-
- vmap <Leader>y "+y
- vmap <Leader>d "+d
- nmap <Leader>p "+p
- nmap <Leader>P "+P
- vmap <Leader>p "+p
- vmap <Leader>P "+P
-
- ]])
-
+map("<Leader>l", ":lopen<CR>")
 
 vim.cmd([[
- " Rspec
- map <Leader>t :call RunCurrentSpecFile()<CR>
- map <Leader>s :call RunNearestSpec()<CR>
- map <Leader>l :call RunLastSpec()<CR>
- map <Leader>a :call RunAllSpecs()<CR>
-
- let g:rspec_command = "bundle exec rspec --drb {spec}"
-
- " I dont remember what this is for
- map <Leader>l :lopen<CR>
-
  set listchars=tab:>-
 
  "improve autocomplete menu color
@@ -350,20 +337,20 @@ vim.cmd([[
  autocmd BufRead *.py execute ':Black'
  autocmd BufWritePre *.py execute ':Black'
 
- "
- "   map <F3> :call FormatJSON()<CR>
- "
- "
-  " Show quotes in JSON
-  set conceallevel=0
+  ]])
 
+vim.g.conceallevel=0
+
+vim.cmd([[
   " Format hash
   nnoremap <F8> $v%lohc<CR><CR><Up><C-r>"<Esc>:s/,/,\r/g<CR>:'[,']norm ==<CR>
+]])
 
-  set ts=2  " Tabs are 2 spaces
-  set bs=2  " Backspace over everything in insert mode
-  set shiftwidth=2  " Tabs under smart indenting
+vim.opt.ts=2  -- Tabs are 2 spaces
+vim.opt.bs="2"  -- Backspace over everything in insert mode
+vim.opt.shiftwidth=2  -- Tabs under smart indenting
 
+vim.cmd([[
   " Set javascript indents for 4
   autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 expandtab
   autocmd Filetype coffeescript setlocal ts=4 sw=4 sts=0 expandtab
