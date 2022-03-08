@@ -191,8 +191,43 @@ local noremap_functions = {
 }
 
 for key, command in pairs(noremap_functions) do
-  nnoremap('n', string.format('<Leader>%s', key), command)
+  nnoremap( string.format('<Leader>%s', key), command, command)
 end
+
+--which_key: health#which_key#check
+--
+--========================================================================
+--## WhichKey: checking conflicting keymaps
+--  - WARNING: conflicting keymap exists for mode **"n"**, lhs: **"gc"**
+--  - INFO: rhs: `<Plug>Commentary`
+--  - WARNING: conflicting keymap exists for mode **"n"**, lhs: **"yS"**
+--  - INFO: rhs: `<Plug>YSurround`
+--  - WARNING: conflicting keymap exists for mode **"n"**, lhs: **"ys"**
+--  - INFO: rhs: `<Plug>Ysurround`
+--  - WARNING: conflicting keymap exists for mode **"n"**, lhs: **",m"**
+--  - INFO: rhs: `:TmuxNavigateDown<CR>`
+--  - WARNING: conflicting keymap exists for mode **"n"**, lhs: **",w"**
+--  - INFO: rhs: `:WhichKey `
+--  - WARNING: conflicting keymap exists for mode **"n"**, lhs: **",n"**
+--  - INFO: rhs: `:NERDTreeToggle<CR>`
+--  - WARNING: conflicting keymap exists for mode **"n"**, lhs: **",b"**
+--  - INFO: rhs: `:Buffers<CR>`
+--  - WARNING: conflicting keymap exists for mode **"n"**, lhs: **",t"**
+--  - INFO: rhs: `:Tags<CR>`
+--  - WARNING: conflicting keymap exists for mode **"n"**, lhs: **",c"**
+--  - INFO: rhs: `:Commentary<CR>`
+--  - WARNING: conflicting keymap exists for mode **"n"**, lhs: **",r"**
+--  - INFO: rhs: `:edit!<CR>`
+--  - WARNING: conflicting keymap exists for mode **"n"**, lhs: **"L"**
+--  - INFO: rhs: ` `
+--  - WARNING: conflicting keymap exists for mode **"i"**, lhs: **"<C-X>"**
+--  - INFO: rhs: `<C-R>=<SNR>126_ManualCompletionEnter()<CR>`
+--  - WARNING: conflicting keymap exists for mode **"o"**, lhs: **",n"**
+--  - INFO: rhs: `:NERDTreeToggle<CR>`
+--  - WARNING: conflicting keymap exists for mode **"v"**, lhs: **",s"**
+--  - INFO: rhs: `:StripWhitespace<CR>`
+--  - WARNING: conflicting keymap exists for mode **"v"**, lhs: **",n"**
+--  - INFO: rhs: `:NERDTreeToggle<CR>`
 
 -- " Turn off Ex mode forever
  -- Required
@@ -323,6 +358,8 @@ map("Leader>l", ":call RunLastSpec()<CR>")
 map("Leader>a", ":call RunAllSpecs()<CR>")
 
 vim.g.rspec_command = "bundle exec rspec --drb {spec}"
+vim.g.better_whitespace_enabled = 1
+vim.g.strip_whitespace_on_save = 1
 
 map("<Leader>l", ":lopen<CR>")
 
@@ -364,7 +401,7 @@ vim.cmd([[
   map <Leader>rt :!ctags -R --extra=+f --exclude=@/Users/rmeyer/.ctags_ignore .<CR><CR>
 
   "Sets the tags directory to look backwards till it finds a tags dir
-  " set tags=~/.tags;/
+  set tags=./tmp/.tags/
 
  " associate  with ruby filetype
  au BufRead,BufNewFile ^M^W^W    setfiletype ruby
@@ -636,7 +673,7 @@ filetype plugin on " Enable filetype-specific plugins
   " Load all plugins now.
   " Plugins need to be added to runtimepath before helptags can be generated.
   packloadall
- 
+
 " Load all of the helptags now, after plugins have been loaded.
 " All messages and errors will be ignored.
 silent! helptags ALL
