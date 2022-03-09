@@ -14,7 +14,7 @@ tags
 
 # Node Modules
 node_modules
- 
+
 # Packages #
 ############
 # it's better to unpack these files and commit the raw source
@@ -27,13 +27,13 @@ node_modules
 *.rar
 *.tar
 *.zip
- 
+
 # Logs and databases #
 ######################
 *.log
 *.sql
 *.sqlite
- 
+
 # OS generated files #
 ######################
 .DS_Store
@@ -104,3 +104,5 @@ ngrok
 Guardfile.rob
 .devcontainer
 ^M^W^W
+
+tmp

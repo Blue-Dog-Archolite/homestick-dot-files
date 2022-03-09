@@ -6,6 +6,7 @@ tap "homebrew/core"
 tap "homebrew/services"
 tap "ngrok/ngrok"
 tap "timescale/tap"
+brew "golang"
 brew "awscli"
 brew "ctags", link: false
 brew "direnv"

@@ -10,6 +10,10 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
+-- GoLang
+Plug 'fatih/vim-go'
+
+-- Yarp for text wrapping and pull
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 
@@ -66,8 +70,6 @@ Plug 'juliosueiras/vim-terraform-completion'
 
 -- Searching
 Plug 'vim-scripts/FuzzyFinder'
-Plug 'rking/ag.vim'
-Plug 'jremmen/vim-ripgrep'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'mileszs/ack.vim'
 Plug 'skwp/greplace.vim'
@@ -175,7 +177,8 @@ imap("kk", "->", "Arrow")
 imap("aa", "@", "At Sign")
 imap("zz", "binding.pry", "Setup binding.pry for ruby")
 imap("zz", "import pudb<CR>pudb.set_trace()", "Set up debugging for python")
-nnoremap("nnoremap Q", "<nop>", "Don't let Q do ANYTHING")
+nnoremap("Q", "<nop>", "Don't let Q do ANYTHING")
+nnoremap("q", "<nop>", "Don't let Q do ANYTHING")
 
 -- TODO Add WhichKey Group Names
 local noremap_functions = {
@@ -188,6 +191,7 @@ local noremap_functions = {
   r = ":edit!<CR>",
   v = ":vsp^M^W^W<cr>",
   h =  ":split^M^W^W<cr>",
+  rs = ":Gsearch "
 }
 
 for key, command in pairs(noremap_functions) do
@@ -258,19 +262,20 @@ vim.cmd([[
 vim.cmd([[
  " Coc.Vim
  let g:coc_global_extensions = [
-       \'coc-syntax',
-       \'coc-lua',
-       \ 'coc-post',
-       \ 'coc-html',
        \ 'coc-dictionary',
-       \ 'coc-tsserver',
-       \ 'coc-solargraph',
-       \ 'coc-phpls',
-       \ 'coc-json',
        \ 'coc-docker',
-       \ 'coc-word',
+       \ 'coc-go',
+       \ 'coc-html',
+       \ 'coc-json',
+       \ 'coc-lua',
+       \ 'coc-phpls',
+       \ 'coc-post',
+       \ 'coc-solargraph',
+       \ 'coc-syntax',
+       \ 'coc-tag',
+       \ 'coc-tsserver',
        \ 'coc-ultisnips',
-       \ 'coc-tag'
+       \ 'coc-word'
        \ ]
 ]])
 
@@ -401,7 +406,8 @@ vim.cmd([[
   map <Leader>rt :!ctags -R --extra=+f --exclude=@/Users/rmeyer/.ctags_ignore .<CR><CR>
 
   "Sets the tags directory to look backwards till it finds a tags dir
-  set tags=./tmp/.tags/
+  set tags=expand('~/.tags/')
+  let g:gutentags_cache_dir='./tmp/tags/'
 
  " associate  with ruby filetype
  au BufRead,BufNewFile ^M^W^W    setfiletype ruby
@@ -662,7 +668,7 @@ filetype plugin on " Enable filetype-specific plugins
   let g:ackprg='rg --vimgrep --no-heading'
   " map <Leader>g :Rg
 
-  let g:fuzzy_ignore = '.o;.obj;.bak;.exe;.pyc;.pyo;.DS_Store;.db;.orig;.sql;.doc;*.*.pyc'
+  let g:fuzzy_ignore = '.o;.obj;.bak;.exe;.pyc;.pyo;.DS_Store;.db;.orig;.sql;.doc;*.*.pyc,tags'
   command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" --glob "!node_modules/*" --glob "!.git/*" --glob "!node_modules" '.shellescape(<q-args>), 1, <bang>0)
   " command! -bang -nargs=* Find call FZF#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
   " map <Leader>g :Find
