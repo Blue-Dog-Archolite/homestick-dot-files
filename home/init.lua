@@ -176,7 +176,7 @@ imap("hh", "=>", "HashRocket")
 imap("kk", "->", "Arrow")
 imap("aa", "@", "At Sign")
 imap("zz", "binding.pry", "Setup binding.pry for ruby")
-imap("zz", "import pudb<CR>pudb.set_trace()", "Set up debugging for python")
+-- imap("zz", "import pudb<CR>pudb.set_trace()", "Set up debugging for python")
 nnoremap("Q", "<nop>", "Don't let Q do ANYTHING")
 nnoremap("q", "<nop>", "Don't let Q do ANYTHING")
 

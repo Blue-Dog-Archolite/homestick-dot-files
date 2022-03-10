@@ -1,37 +1,37 @@
-require '~/tools/BashProfile/ruby_utility/safe_load'
+# require '~/tools/BashProfile/ruby_utility/safe_load'
 
 if defined?(PryDebugger) || defined?(PryByebug)
   Pry.commands.alias_command 'c', 'continue'
   Pry.commands.alias_command 's', 'step'
   Pry.commands.alias_command 'n', 'next'
   Pry.commands.alias_command 'f', 'finish'
+  Pry.commands.alias_command 'pwd', 'whereami 20'
 end
 
-#Pry Alias
+# Pry Alias
 if defined?(Pry)
   Pry.commands.alias_command 'll', 'ls'
   Pry.commands.alias_command 'sm', 'show-source -b ARGV[1]'
   Pry.commands.alias_command 'sl', 'show-source -l $1'
 end
 
-
-#easily load testing environment tools
+# easily load testing environment tools
 def load_blueprints
   require "#{Rails.root}/test/load_blueprints.rb"
 end
 
 def load_factories
-  %w{vcr factory_girl_rails factory_bot_rails faker ffaker}.each{|gem| safe_load_gem(gem) }
+  %w[vcr factory_girl_rails factory_bot_rails faker ffaker].each { |gem| safe_load_gem(gem) }
 
   FactoryGirl.reload if defined?(FactoryGirl)
   FactoryBot.reload if defined?(FactoryBot)
 end
 
-#def set_school(id=5)
+# def set_school(id=5)
 #  SchoolInstance.current_school = SchoolInstance.find(id)
-#end
+# end
 
-#hack to clear the screen
+# HACK: to clear the screen
 def cls
   `reset`
 end
@@ -42,12 +42,12 @@ def associated_with(object_or_class)
   klass.reflect_on_all_associations.map(&:name).sort
 end
 
-##Editor configuration
+# #Editor configuration
 ## Pry.config.editor = proc { |file, line| "nvim +#{line} #{file}" }
 
 # Customer exit message
 Pry.config.hooks.add_hook(:after_session, :say_bye) do
-  puts "So Say We All"
+  puts 'So Say We All'
 end
 
 # Prompt with ruby version
