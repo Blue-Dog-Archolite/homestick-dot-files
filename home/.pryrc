@@ -20,12 +20,12 @@ def load_blueprints
   require "#{Rails.root}/test/load_blueprints.rb"
 end
 
-def load_factories
-  %w[vcr factory_girl_rails factory_bot_rails faker ffaker].each { |gem| safe_load_gem(gem) }
+# def load_factories
+#   %w[vcr factory_girl_rails factory_bot_rails faker ffaker].each { |gem| safe_load_gem(gem) }
 
-  FactoryGirl.reload if defined?(FactoryGirl)
-  FactoryBot.reload if defined?(FactoryBot)
-end
+#   FactoryGirl.reload if defined?(FactoryGirl)
+#   FactoryBot.reload if defined?(FactoryBot)
+# end
 
 # def set_school(id=5)
 #  SchoolInstance.current_school = SchoolInstance.find(id)
@@ -51,10 +51,10 @@ Pry.config.hooks.add_hook(:after_session, :say_bye) do
 end
 
 # Prompt with ruby version
-Pry.prompt = [proc { |obj, nest_level| "#{RUBY_VERSION} (#{obj}):#{nest_level} > " }, proc { |obj, nest_level| "#{RUBY_VERSION} (#{obj}):#{nest_level} * " }]
+# Pry.prompt = [proc { |obj, nest_level| "#{RUBY_VERSION} (#{obj}):#{nest_level} > " }, proc { |obj, nest_level| "#{RUBY_VERSION} (#{obj}):#{nest_level} * " }]
 
 # Name is pwd
-Pry.config.prompt_name = File.basename(Dir.pwd)
+# Pry.config.prompt_name = File.basename(Dir.pwd)
 
 ## Force `reload!` to work correctly
 ## self.send(:include, Rails::ConsoleMethods)

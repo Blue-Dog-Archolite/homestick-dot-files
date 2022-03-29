@@ -1,5 +1,14 @@
 vim.call('plug#begin', '~/.config/nvim/plugged')
 
+vim.cmd([[
+
+ " let g:python3_host_prog='/Users/rmeyer/.local/share/virtualenvs/vim3/bin/python3'
+ " let g:python3host_prog='/Users/rmeyer/.local/share/virtualenvs/vim3/bin/python3'
+ " let g:black_virtualenv=$HOME.'/.local/share/virtualenvs/vim3/'
+ " let g:black_virtualenv='/Users/rmeyer/.local/share/virtualenvs/vim_env-C6wbvWfk-RV8du6qt'
+
+  ]])
+
 
 -- Plugs-Start
 local Plug = vim.fn['plug#']
@@ -11,7 +20,7 @@ Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
 -- GoLang
-Plug 'fatih/vim-go'
+Plug('fatih/vim-go', {['do'] = ':GoUpdateBinaries' })
 
 -- Yarp for text wrapping and pull
 Plug 'roxma/nvim-yarp'
@@ -141,9 +150,7 @@ Plug 'roxma/vim-hug-neovim-rpc'
 
 -- Build Requires
 Plug('Shougo/vimproc.vim', {['do']= 'make'})
-Plug('psf/black')
--- Black version control
--- , { 'rev': 'ce14fa8b497bae2b50ec48b3bd7022573a59cdb1' })
+-- Plug('psf/black') --, {'tag', '*'})
 Plug('neoclide/coc.nvim', {['do'] ='yarn install --frozen-lockfile'})
 
 vim.call('plug#end')
@@ -172,7 +179,7 @@ vim.cmd("set history=1024")        -- Number of things to remember in history.
 require'mapx'.setup{ global = true, whichkey = true }
 
 -- Hard to type *****************************************************************
-imap("hh", "=>", "HashRocket")
+imap("jj", "<ESC>", "Exit insert mode")
 imap("kk", "->", "Arrow")
 imap("aa", "@", "At Sign")
 imap("zz", "binding.pry", "Setup binding.pry for ruby")
@@ -184,6 +191,7 @@ nnoremap("q", "<nop>", "Don't let Q do ANYTHING")
 local noremap_functions = {
   f = ":GFiles<CR> ",
   t = ":Tags<CR>",
+  j = ":TagbarToggle<CR>",
   c = ":Commentary<CR>",
   b = ":Buffers<CR>",
   g = ":Find ",
@@ -376,8 +384,8 @@ vim.cmd([[
 
  " Removes trailing spaces
  " BufWritePre * :%s/\s\+$//e
- autocmd BufRead *.py execute ':Black'
- autocmd BufWritePre *.py execute ':Black'
+ " autocmd BufRead *.py execute ':Black'
+ " autocmd BufWritePre *.py execute ':Black'
 
   ]])
 
@@ -406,8 +414,19 @@ vim.cmd([[
   map <Leader>rt :!ctags -R --extra=+f --exclude=@/Users/rmeyer/.ctags_ignore .<CR><CR>
 
   "Sets the tags directory to look backwards till it finds a tags dir
-  set tags=expand('~/.tags/')
-  let g:gutentags_cache_dir='./tmp/tags/'
+  "set tags=expand('/Users/rmeyer/tmp/tags/')
+
+  " enable gtags module
+  let g:gutentags_modules = ['ctags', 'gtags_cscope']
+
+  " config project root markers.
+  let g:gutentags_project_root = ['.root']
+
+  " generate datebases in my cache directory, prevent gtags files polluting my project
+  let g:gutentags_cache_dir = expand('~/.cache/tags')
+
+  " change focus to quickfix window after search (optional).
+  let g:gutentags_plus_switch = 1
 
  " associate  with ruby filetype
  au BufRead,BufNewFile ^M^W^W    setfiletype ruby
@@ -479,7 +498,7 @@ inoremap <F8> <ESC>mzgg=G`z<Insert>
 " Status Line *****************************************************************
 set showcmd
 set ruler " Show ruler
-" set ch=2 " Make command line two lines high
+set ch=2 " Make command line two lines high
 match LongLineWarning '\%120v.*' " Error format when a line is longer than 120
 
 
@@ -580,8 +599,10 @@ filetype plugin on " Enable filetype-specific plugins
 
  let g:python_host_prog=$HOME.'/.local/share/virtualenvs/vim2/bin/python2'
 
- let g:python3_host_prog=$HOME.'/.local/share/virtualenvs/vim3/bin/python3'
- let g:python3host_prog=$HOME.'/.local/share/virtualenvs/vim3/bin/python3'
+ let g:python3_host_prog='/Users/rmeyer/.local/share/virtualenvs/vim3/bin/python3'
+ let g:python3host_prog='/Users/rmeyer/.local/share/virtualenvs/vim3/bin/python3'
+ " let g:black_virtualenv=$HOME.'/.local/share/virtualenvs/vim3/bin/python3'
+ " let g:black_virtualenv='/Users/rmeyer/.local/share/virtualenvs/vim_env-C6wbvWfk-RV8du6qt'
 
  let g:syntastic_always_populate_loc_list = 1
  let g:syntastic_auto_loc_list = 1
@@ -673,6 +694,13 @@ filetype plugin on " Enable filetype-specific plugins
   " command! -bang -nargs=* Find call FZF#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
   " map <Leader>g :Find
 
+  let g:kite_supported_languages = ['*']
+
+  let g:kite_tab_complete=1
+set completeopt+=menuone
+set completeopt+=noselect
+set completeopt+=preview
+autocmd CompleteDone * if !pumvisible() | pclose | endif
 
   " Put these lines at the very end of your vimrc file.
 
