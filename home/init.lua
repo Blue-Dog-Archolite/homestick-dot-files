@@ -2,10 +2,10 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 
 vim.cmd([[
 
- " let g:python3_host_prog='/Users/rmeyer/.local/share/virtualenvs/vim3/bin/python3'
- " let g:python3host_prog='/Users/rmeyer/.local/share/virtualenvs/vim3/bin/python3'
- " let g:black_virtualenv=$HOME.'/.local/share/virtualenvs/vim3/'
- " let g:black_virtualenv='/Users/rmeyer/.local/share/virtualenvs/vim_env-C6wbvWfk-RV8du6qt'
+ let g:python3_host_prog='/Users/rmeyer/.local/share/virtualenvs/vim3/bin/python3'
+ let g:python3host_prog='/Users/rmeyer/.local/share/virtualenvs/vim3/bin/python3'
+
+ let g:black_virtualenv='/Users/rmeyer/.local/share/virtualenvs/vim3'
 
   ]])
 
@@ -56,12 +56,15 @@ Plug 'tpope/vim-haml'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf.vim'
 Plug('junegunn/fzf', {['do'] = vim.fn['fzf#install']})
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-fuzzy.vim'
 
 -- Git
 Plug 'rhysd/committia.vim'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'rbong/vim-flog'
 Plug 'tpope/vim-rhubarb'
 
 Plug 'vim-scripts/Align'
@@ -98,10 +101,8 @@ Plug 'altercation/solarized'
 Plug 'chriskempson/base16-vim'
 Plug 'chriskempson/tomorrow-theme'
 Plug 'freeo/vim-kalisi'
-Plug 'twerth/ir_black'
 Plug 'mhartington/oceanic-next'
--- "Luxed/ayu-vim"
-
+Plug 'twerth/ir_black'
 Plug 'vim-scripts/Wombat'
 Plug 'w0ng/vim-hybrid'
 
@@ -111,6 +112,15 @@ Plug 'luochen1990/rainbow'
 
 -- Linters
 Plug 'w0rp/ale'
+
+-- Python Language Server
+Plug('pappasam/coc-jedi', { ['do'] = 'yarn install --frozen-lockfile && yarn build'})
+
+
+vim.cmd([[
+  Plug 'psf/black', { 'tag': 'stable' }
+]])
+
 
 -- Completion
 Plug 'ervandew/supertab'
@@ -150,7 +160,6 @@ Plug 'roxma/vim-hug-neovim-rpc'
 
 -- Build Requires
 Plug('Shougo/vimproc.vim', {['do']= 'make'})
--- Plug('psf/black') --, {'tag', '*'})
 Plug('neoclide/coc.nvim', {['do'] ='yarn install --frozen-lockfile'})
 
 vim.call('plug#end')
@@ -182,7 +191,7 @@ require'mapx'.setup{ global = true, whichkey = true }
 imap("jj", "<ESC>", "Exit insert mode")
 imap("kk", "->", "Arrow")
 imap("aa", "@", "At Sign")
-imap("zz", "binding.pry", "Setup binding.pry for ruby")
+-- imap("zz", "binding.pry", "Setup binding.pry for ruby")
 -- imap("zz", "import pudb<CR>pudb.set_trace()", "Set up debugging for python")
 nnoremap("Q", "<nop>", "Don't let Q do ANYTHING")
 nnoremap("q", "<nop>", "Don't let Q do ANYTHING")
@@ -283,7 +292,8 @@ vim.cmd([[
        \ 'coc-tag',
        \ 'coc-tsserver',
        \ 'coc-ultisnips',
-       \ 'coc-word'
+       \ 'coc-word',
+       \ 'coc-diagnostic'
        \ ]
 ]])
 
@@ -312,7 +322,8 @@ vim.cmd([[
  " Airline Vim Tagbar Setup
  " if you want to disable auto detect, comment out those two lines
  "let g:airline#extensions#disable_rtp_load = 1
- let g:airline_extensions = ['branch', 'hunks', 'coc']
+
+ let g:airline_extensions = ['hunks', 'coc']
 
  set cinoptions=:0,p0,t0
  set cinwords=if,else,while,do,for,switch,case
@@ -370,6 +381,12 @@ map("Leader>s", ":call RunNearestSpec()<CR>")
 map("Leader>l", ":call RunLastSpec()<CR>")
 map("Leader>a", ":call RunAllSpecs()<CR>")
 
+
+-- Search
+map("z/", "<Plug>(incsearch-fuzzy-/)")
+map("z?", "<Plug>incsearch-fuzzy-?)")
+map("zg/", "<Plug>incsearch-fuzzy-stay)")
+
 vim.g.rspec_command = "bundle exec rspec --drb {spec}"
 vim.g.better_whitespace_enabled = 1
 vim.g.strip_whitespace_on_save = 1
@@ -382,6 +399,7 @@ vim.cmd([[
  "improve autocomplete menu color
  highlight Pmenu ctermbg=238 gui=bold
 
+  " I fucking still can't get black to work this way"
  " Removes trailing spaces
  " BufWritePre * :%s/\s\+$//e
  " autocmd BufRead *.py execute ':Black'
@@ -579,7 +597,7 @@ filetype plugin on " Enable filetype-specific plugins
  nnoremap <silent> <Leader>" :TmuxNavigateLeft<cr>
  nnoremap <silent> <Leader>m :TmuxNavigateDown<cr>
  nnoremap <silent> <Leader>u :TmuxNavigateUp<cr>
- " nnoremap <silent>  :TmuxNavigateRight<cr>
+ nnoremap <silent> <Leader>'  :TmuxNavigateRight<cr>
  " nnoremap <silent>  :TmuxNavigatePrevious<cr>
 
  " Plugin key-mappings.
@@ -597,12 +615,7 @@ filetype plugin on " Enable filetype-specific plugins
    set conceallevel=0 concealcursor=niv
  endif
 
- let g:python_host_prog=$HOME.'/.local/share/virtualenvs/vim2/bin/python2'
-
- let g:python3_host_prog='/Users/rmeyer/.local/share/virtualenvs/vim3/bin/python3'
- let g:python3host_prog='/Users/rmeyer/.local/share/virtualenvs/vim3/bin/python3'
- " let g:black_virtualenv=$HOME.'/.local/share/virtualenvs/vim3/bin/python3'
- " let g:black_virtualenv='/Users/rmeyer/.local/share/virtualenvs/vim_env-C6wbvWfk-RV8du6qt'
+ let g:loaded_perl_provider = 0
 
  let g:syntastic_always_populate_loc_list = 1
  let g:syntastic_auto_loc_list = 1
@@ -646,11 +659,11 @@ filetype plugin on " Enable filetype-specific plugins
 
   autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 
-  " Ale ES Linter
-  let g:ale_fixers = {
+ " " Ale ES Linter
+ let g:ale_fixers = {
         \   'javascript': ['eslint'],
-        \   'python3': ['black', 'autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf'],
-        \   'python': ['black','autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf'],
+        \   'python3': ['black', 'autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf', 'autoflake'],
+        \   'python': ['black','autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf', 'autoflake'],
         \   'ruby': ['remove_trailing_lines', 'rufo', 'sorbet', 'trim_whitespace', 'rubocop'],
         \}
 
@@ -664,19 +677,19 @@ filetype plugin on " Enable filetype-specific plugins
   let g:ale_sign_error = '✘'
   let g:ale_sign_warning = '⚠'
 
-  nmap <silent> <C-e> <Plug>(ale_next_wrap)
+ " nmap <silent> <C-e> <Plug>(ale_next_wrap)
 
 
-    function! LinterStatus() abort
-      let l:counts = ale#statusline#Count(bufnr(''))
-      let l:all_errors = l:counts.error + l:counts.style_error
-      let l:all_non_errors = l:counts.total - l:all_errors
-      return l:counts.total == 0 ? 'OK' : printf(
-            \   '%d⨉ %d⚠ ',
-            \   all_errors,
-            \   all_non_errors
-            \)
-    endfunction
+ "   function! LinterStatus() abort
+ "     let l:counts = ale#statusline#Count(bufnr(''))
+ "     let l:all_errors = l:counts.error + l:counts.style_error
+ "     let l:all_non_errors = l:counts.total - l:all_errors
+ "     return l:counts.total == 0 ? 'OK' : printf(
+ "           \   '%d⨉ %d⚠ ',
+ "           \   all_errors,
+ "           \   all_non_errors
+ "           \)
+ "   endfunction
 
 
   " HTML Auto Close
@@ -690,9 +703,21 @@ filetype plugin on " Enable filetype-specific plugins
   " map <Leader>g :Rg
 
   let g:fuzzy_ignore = '.o;.obj;.bak;.exe;.pyc;.pyo;.DS_Store;.db;.orig;.sql;.doc;*.*.pyc,tags'
-  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" --glob "!node_modules/*" --glob "!.git/*" --glob "!node_modules" '.shellescape(<q-args>), 1, <bang>0)
+  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" --glob "!tags" --glob "!node_modules/*" --glob "!.git/*" --glob "!node_modules" '.shellescape(<q-args>), 1, <bang>0)
   " command! -bang -nargs=* Find call FZF#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
   " map <Leader>g :Find
+
+  " Stupid :W
+ command WQ wq
+ command Wq wq
+ command W w
+ command Q q
+
+
+  " zz for file types
+  autocmd FileType ruby   nnoremap <buffer> zz ibinding.pry<CR>
+  autocmd FileType python nnoremap <buffer> zz iimport pudb<CR>pudb.set_trace()<CR>
+
 
   let g:kite_supported_languages = ['*']
 

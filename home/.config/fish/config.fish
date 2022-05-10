@@ -25,3 +25,7 @@ direnv hook fish | source
 # "Starship"
 # starship init fish | source
 rvm default
+
+# Setting PATH for Python 3.10
+# The original version is saved in /Users/rmeyer/.config/fish/config.fish.pysave
+set -x PATH "/Library/Frameworks/Python.framework/Versions/3.10/bin" "$PATH"
