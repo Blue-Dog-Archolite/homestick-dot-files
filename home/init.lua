@@ -30,15 +30,15 @@ Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Raimondi/delimitMate'
 
-Plug 'vim-airline/vim-airline'
+Plug 'b0o/mapx.nvim'
+Plug 'folke/which-key.nvim'
 Plug 'janko-m/vim-test'
 Plug 'kien/ctrlp.vim'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'skywind3000/gutentags_plus'
 Plug 'majutsushi/tagbar'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'folke/which-key.nvim'
-Plug 'b0o/mapx.nvim'
+Plug 'skywind3000/gutentags_plus'
+Plug 'vim-airline/vim-airline'
 
 
 Plug 'scrooloose/nerdtree'
@@ -115,11 +115,7 @@ Plug 'w0rp/ale'
 
 -- Python Language Server
 Plug('pappasam/coc-jedi', { ['do'] = 'yarn install --frozen-lockfile && yarn build'})
-
-
-vim.cmd([[
-  Plug 'psf/black', { 'tag': 'stable' }
-]])
+Plug 'psf/black'
 
 
 -- Completion
@@ -153,9 +149,14 @@ Plug 'iamcco/coc-post'
 
 -- Tmux keybindings
 Plug 'christoomey/vim-tmux-navigator'
+-- Plug 'knubie/vim-kitty-navigator'
 
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
+
+-- telescope.nvim is a highly extendable fuzzy finder over lists.
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 
 -- Build Requires
@@ -190,30 +191,57 @@ require'mapx'.setup{ global = true, whichkey = true }
 -- Hard to type *****************************************************************
 imap("jj", "<ESC>", "Exit insert mode")
 imap("kk", "->", "Arrow")
-imap("aa", "@", "At Sign")
--- imap("zz", "binding.pry", "Setup binding.pry for ruby")
--- imap("zz", "import pudb<CR>pudb.set_trace()", "Set up debugging for python")
+-- imap("aa", "@", "At Sign")
 nnoremap("Q", "<nop>", "Don't let Q do ANYTHING")
 nnoremap("q", "<nop>", "Don't let Q do ANYTHING")
 
 -- TODO Add WhichKey Group Names
 local noremap_functions = {
-  f = ":GFiles<CR> ",
+  -- f = ":GFiles<CR> ",
   t = ":Tags<CR>",
   j = ":TagbarToggle<CR>",
   c = ":Commentary<CR>",
-  b = ":Buffers<CR>",
-  g = ":Find ",
+  -- b = ":Buffers<CR>",
+  -- g = ":Find ",
   w = ":WhichKey ",
   r = ":edit!<CR>",
   v = ":vsp^M^W^W<cr>",
   h =  ":split^M^W^W<cr>",
-  rs = ":Gsearch "
+  -- rs = ":Gsearch "
 }
+
+vim.cmd([[
+" Find files using Telescope command-line sugar.
+nnoremap <leader>f <cmd>Telescope find_files<cr>
+nnoremap <leader>g <cmd>Telescope live_grep<cr>
+nnoremap <leader>b <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+  ]])
 
 for key, command in pairs(noremap_functions) do
   nnoremap( string.format('<Leader>%s', key), command, command)
 end
+
+
+vim.cmd([[
+" Gif config
+" map  / <Plug>(easymotion-sn)
+" omap / <Plug>(easymotion-tn)
+
+" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
+" Without these mappings, `n` & `N` works fine. (These mappings just provide
+" different highlight method and have some other features )
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+
+nmap s <Plug>(easymotion-overwin-f2)
+map <Leader>k <Plug>(easymotion-k)
+
+  " Case insensitive
+let g:EasyMotion_smartcase = 1
+
+
+]])
 
 --which_key: health#which_key#check
 --
@@ -272,6 +300,22 @@ vim.cmd([[
  endif
  ]])
 
+
+-- Vim-Go
+
+ vim.cmd([[
+" Navigation commands
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+
+" Alternate commands
+au FileType go nmap <Leader>ae <Plug>(go-alternate-edit)
+au FileType go nmap <Leader>av <Plug>(go-alternate-vertical)
+
+
+   " Use new vim 8.2 popup windows for Go Doc
+let g:go_doc_popup_window = 1
+   ]])
 
 -- CoC.vim
 
@@ -438,13 +482,14 @@ vim.cmd([[
   let g:gutentags_modules = ['ctags', 'gtags_cscope']
 
   " config project root markers.
-  let g:gutentags_project_root = ['.root']
+  let g:gutentags_project_root = ['.root', '.git']
 
   " generate datebases in my cache directory, prevent gtags files polluting my project
   let g:gutentags_cache_dir = expand('~/.cache/tags')
 
   " change focus to quickfix window after search (optional).
   let g:gutentags_plus_switch = 1
+  let g:gutentags_define_advanced_commands = 1
 
  " associate  with ruby filetype
  au BufRead,BufNewFile ^M^W^W    setfiletype ruby
@@ -594,11 +639,11 @@ filetype plugin on " Enable filetype-specific plugins
  " Tmux Navigation **********************************************************
  let g:tmux_navigator_no_mappings = 1
 
- nnoremap <silent> <Leader>" :TmuxNavigateLeft<cr>
- nnoremap <silent> <Leader>m :TmuxNavigateDown<cr>
- nnoremap <silent> <Leader>u :TmuxNavigateUp<cr>
- nnoremap <silent> <Leader>'  :TmuxNavigateRight<cr>
- " nnoremap <silent>  :TmuxNavigatePrevious<cr>
+nnoremap <silent> <Leader>" :TmuxNavigateLeft<cr>
+nnoremap <silent> <Leader>m :TmuxNavigateDown<cr>
+nnoremap <silent> <Leader>u :TmuxNavigateUp<cr>
+nnoremap <silent> <Leader>'  :TmuxNavigateRight<cr>
+" nnoremap <silent>  :TmuxNavigatePrevious<cr>
 
  " Plugin key-mappings.
  " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
