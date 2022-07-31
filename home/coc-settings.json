@@ -1,0 +1,38 @@
+{
+    "languageserver": {
+        "golang": {
+            "command": "gopls",
+            "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+            "filetypes": ["go"]
+        },
+        "python": {
+            "command": "/Users/rmeyer/.homesick/repos/homestick-dot-files/home/.config/nvim/plugged/coc-jedi/.venv/bin/jedi-language-server",
+            "filetypes": ["python"]
+        }
+    },
+    "diagnostic-languageserver.filetypes": {
+        "cmake": [ "cmake-lint", "cmakelint" ],
+        "eelixir": ["mix_credo", "mix_credo_compile"],
+        "elixir": ["mix_credo", "mix_credo_compile"],
+        "email": "languagetool",
+        "markdown": [ "write-good", "markdownlint" ],
+        "php": ["phpstan", "psalm"],
+        "ruby": "rubocop",
+        "sh": "shellcheck",
+        "python": ["black", "isort", "autoflake"],
+        "systemd": "systemd-analyze",
+        "vim": "vint",
+        "yaml": [ "yamllint" ]
+    },
+    "diagnostic-languageserver.formatFiletypes": {
+        "blade": "blade-formatter",
+        "cmake": "cmake-format",
+        "dart": "dartfmt",
+        "eelixir": "mix_format",
+        "elixir": "mix_format",
+        "lua": "lua-format",
+        "python": ["black", "isort", "autoflake"],
+        "ruby": ["rubocop"],
+        "sh": "shfmt"
+    }
+}
