@@ -6,10 +6,8 @@ package fasd
 package foreign-env
 package fzf
 package git-flow
-package keychain
 package linuxbrew
 package nvm
-package rvm
 package thefuck
 package z
 theme default

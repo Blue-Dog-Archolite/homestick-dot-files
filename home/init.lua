@@ -19,6 +19,9 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
+
+Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
+
 -- GoLang
 Plug('fatih/vim-go', {['do'] = ':GoUpdateBinaries' })
 
@@ -56,6 +59,10 @@ Plug 'tpope/vim-haml'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf.vim'
 Plug('junegunn/fzf', {['do'] = vim.fn['fzf#install']})
+
+Plug('neoclide/coc.nvim', {['do'] = vim.fn['yarn install --frozen-lockfile']})
+Plug 'antoinemadec/coc-fzf'
+
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 
@@ -119,7 +126,7 @@ Plug 'psf/black'
 
 
 -- Completion
-Plug 'ervandew/supertab'
+-- Plug 'ervandew/supertab'
 
 -- Rails / Ruby
 Plug 'thoughtbot/vim-rspec'
@@ -227,6 +234,23 @@ vim.cmd([[
 " Gif config
 " map  / <Plug>(easymotion-sn)
 " omap / <Plug>(easymotion-tn)
+
+function! s:config_fuzzyall(...) abort
+  return extend(copy({
+  \   'converters': [
+  \     incsearch#config#fuzzy#converter(),
+  \     incsearch#config#fuzzyspell#converter()
+  \   ],
+  \ }), get(a:, 1, {}))
+endfunction
+
+  noremap <silent><expr> z/ incsearch#go(<SID>config_fuzzyall())
+  noremap <silent><expr> z? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
+  noremap <silent><expr> zg? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
+
+  " map z/ <Plug>(incsearch-fuzzyspell-/)
+  " map z? <Plug>(incsearch-fuzzyspell-?)
+  " map zg/ <Plug>(incsearch-fuzzyspell-stay)
 
 " These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
 " Without these mappings, `n` & `N` works fine. (These mappings just provide
@@ -712,15 +736,15 @@ nnoremap <silent> <Leader>'  :TmuxNavigateRight<cr>
         \   'ruby': ['remove_trailing_lines', 'rufo', 'sorbet', 'trim_whitespace', 'rubocop'],
         \}
 
-  let g:ale_completion_enabled = 0
-  let g:ale_sign_column_always = 1
-  let g:ale_lint_on_enter = 1
-  let g:ale_python_flake8_auto_pipenv = 1
-  let g:ale_fix_on_save = 1
-
-  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-  let g:ale_sign_error = '✘'
-  let g:ale_sign_warning = '⚠'
+""  let g:ale_completion_enabled = 0
+""  let g:ale_sign_column_always = 1
+""  let g:ale_lint_on_enter = 1
+""  let g:ale_python_flake8_auto_pipenv = 1
+""  let g:ale_fix_on_save = 1
+""
+""  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+""  let g:ale_sign_error = '✘'
+""  let g:ale_sign_warning = '⚠'
 
  " nmap <silent> <C-e> <Plug>(ale_next_wrap)
 
@@ -764,13 +788,30 @@ nnoremap <silent> <Leader>'  :TmuxNavigateRight<cr>
   autocmd FileType python nnoremap <buffer> zz iimport pudb<CR>pudb.set_trace()<CR>
 
 
-  let g:kite_supported_languages = ['*']
+  " AUTO COMPLETION WORK
+  " Use <c-space> to trigger completion.
+  if has('nvim')
+    inoremap <silent><expr> <c-space> coc#refresh()
+  else
+    inoremap <silent><expr> <c-@> coc#refresh()
+  endif
 
-  let g:kite_tab_complete=1
-set completeopt+=menuone
-set completeopt+=noselect
-set completeopt+=preview
-autocmd CompleteDone * if !pumvisible() | pclose | endif
+" set completeopt+=menuone
+" set completeopt+=noselect
+" set completeopt+=preview
+" autocmd CompleteDone * if !pumvisible() | pclose | endif
+"  inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+" use <tab> for trigger completion and navigate to the next complete item
+
+  function! CheckBackspace() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
+  inoremap <silent><expr> <Tab>
+        \ coc#pum#visible() ? coc#pum#next(1) :
+        \ CheckBackspace() ? "\<Tab>" :
+        \ coc#refresh()
 
   " Put these lines at the very end of your vimrc file.
 

@@ -8,7 +8,7 @@ SETUVAR FZF_PREVIEW_DIR_CMD:ls
 SETUVAR FZF_PREVIEW_FILE_CMD:head\x20\x2dn\x2010
 SETUVAR FZF_TMUX_HEIGHT:40\x25
 SETUVAR LDFLAGS:\x2dL/usr/local/opt/v8\x403\x2e15/lib
-SETUVAR --export SHELL:/usr/local/bin/fish
+SETUVAR --export SHELL:/opt/homebrew/bin/fish
 SETUVAR TZ_LIST:Europe/Paris\x2cEMEA\x20office\x3bUS/Central\x2cUS\x20office
 SETUVAR __fish_initialized:3400
 SETUVAR __tf_func:function\x20__tf_alias\x20\x2dd\x20\x22Correct\x20your\x20previous\x20console\x20command\x22\x3b\x20\x20set\x20\x2dl\x20fucked_up_command\x20\x24history\x5b1\x5d\x3b\x20\x20env\x20TF_SHELL\x3dfish\x20TF_ALIAS\x3d__tf_alias\x20PYTHONIOENCODING\x3dutf\x2d8\x20thefuck\x20\x24fucked_up_command\x20THEFUCK_ARGUMENT_PLACEHOLDER\x20\x24argv\x20\x7c\x20read\x20\x2dl\x20unfucked_command\x3b\x20\x20if\x20\x5b\x20\x22\x24unfucked_command\x22\x20\x21\x3d\x20\x22\x22\x20\x5d\x3b\x20\x20\x20\x20eval\x20\x24unfucked_command\x3b\x20\x20\x20\x20builtin\x20history\x20delete\x20\x2d\x2dexact\x20\x2d\x2dcase\x2dsensitive\x20\x2d\x2d\x20\x24fucked_up_command\x3b\x20\x20\x20\x20builtin\x20history\x20merge\x3b\x20\x20end\x3bend\x3b
@@ -41,5 +41,5 @@ SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:\x23\x28brew\x20\x2d\x2dprefix\x29\x1e/Users/robert\x2er\x2emeyer/\x2efzf/bin\x1e/Users/rmeyer/\x2eyarn/bin
+SETUVAR fish_user_paths:\x23\x28brew\x20\x2d\x2dprefix\x29\x1e/Users/robert\x2er\x2emeyer/\x2efzf/bin\x1e/Users/rmeyer/\x2eyarn/bin\x1e/Users/rmeyer/\x2efzf/bin
 SETUVAR keychain_init_args:\x2d\x2dquiet\x1e\x2d\x2dconfhost\x1e\x2d\x2dtimeout\x1e60\x1e\x2d\x2dagents\x1essh\x2cgpg

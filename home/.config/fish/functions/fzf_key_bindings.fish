@@ -1,1 +1,1 @@
-/Users/robert.r.meyer/.fzf/shell/key-bindings.fish
+/Users/rmeyer/.fzf/shell/key-bindings.fish
