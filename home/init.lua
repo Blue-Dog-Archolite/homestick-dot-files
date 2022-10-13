@@ -569,14 +569,12 @@ inoremap <F8> <ESC>mzgg=G`z<Insert>
    set nofoldenable " Turn off folding
    set lazyredraw "faster processing
  else
-   " colorscheme kalisi
    colorscheme wombat
-   " colorscheme onedark
+   " colorscheme base16-onedark
+   " colorscheme kalisi
    " colorscheme ir_black
-   " colorscheme tomorrow
+   " colorscheme base16-tomorrow-night
    " colorscheme hybrid
-   " let ayucolor="mirage"
-   " colorscheme ayu
 
    set termguicolors "Remove this in urxvt
  end
@@ -783,6 +781,9 @@ nnoremap <silent> <Leader>'  :TmuxNavigateRight<cr>
  command Q q
 
 
+ " Auto resize windows
+  set equalalways
+
   " zz for file types
   autocmd FileType ruby   nnoremap <buffer> zz ibinding.pry<CR>
   autocmd FileType python nnoremap <buffer> zz iimport pudb<CR>pudb.set_trace()<CR>
@@ -800,7 +801,7 @@ nnoremap <silent> <Leader>'  :TmuxNavigateRight<cr>
 " set completeopt+=noselect
 " set completeopt+=preview
 " autocmd CompleteDone * if !pumvisible() | pclose | endif
-"  inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+  inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 " use <tab> for trigger completion and navigate to the next complete item
 
   function! CheckBackspace() abort
