@@ -2,7 +2,7 @@
 
 if defined? Pry::Prompt && defined? Rails
   RAILS6 = Rails::VERSION::MAJOR == 6
-  app = RAILS6 ? Rails.application.class.module_parent_name : Rails.application.class.parent_name
+  app = RAILS6 ? Rails.application.class.module_parent_name : Rails.application.class.name
   env = Pry::Helpers::Text.bold(Rails.env.upcase)
   env = if Rails.env.production?
           Pry::Helpers::Text.red(env)
