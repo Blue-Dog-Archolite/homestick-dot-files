@@ -106,3 +106,13 @@ Guardfile.rob
 ^M^W^W
 
 tmp
+
+
+# overcommit
+.overcommit.yml
+
+# Fasterer
+.fasterer.yml
+
+#pronto for commits
+bin/pronto.sh

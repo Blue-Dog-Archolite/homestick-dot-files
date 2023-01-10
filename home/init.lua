@@ -2,8 +2,8 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 
 vim.cmd([[
 
- let g:python3_host_prog='/Users/rmeyer/.local/share/virtualenvs/vim3/bin/python3'
- let g:python3host_prog='/Users/rmeyer/.local/share/virtualenvs/vim3/bin/python3'
+ let g:python3_host_prog='/home/rmeyer/.local/share/virtualenvs/vim3'
+ let g:python3host_prog='/home/rmeyer/.local/share/virtualenvs/vim3/bin/python3'
 
  let g:black_virtualenv='/Users/rmeyer/.local/share/virtualenvs/vim3'
 
@@ -24,6 +24,13 @@ Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
 
 -- GoLang
 Plug('fatih/vim-go', {['do'] = ':GoUpdateBinaries' })
+Plug 'ray-x/go.nvim'
+Plug 'ray-x/guihua.lua'
+-- ; recommanded if need floating window support
+
+-- git diff tooling
+Plug 'nvim-lua/plenary.nvim'
+Plug 'sindrets/diffview.nvim'
 
 -- Yarp for text wrapping and pull
 Plug 'roxma/nvim-yarp'
@@ -40,7 +47,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'skywind3000/gutentags_plus'
+-- Plug 'skywind3000/gutentags_plus'
 Plug 'vim-airline/vim-airline'
 
 
@@ -347,6 +354,7 @@ let g:go_doc_popup_window = 1
 vim.cmd([[
  " Coc.Vim
  let g:coc_global_extensions = [
+       \ 'coc-diagnostic',
        \ 'coc-dictionary',
        \ 'coc-docker',
        \ 'coc-go',
@@ -360,8 +368,7 @@ vim.cmd([[
        \ 'coc-tag',
        \ 'coc-tsserver',
        \ 'coc-ultisnips',
-       \ 'coc-word',
-       \ 'coc-diagnostic'
+       \ 'coc-word'
        \ ]
 ]])
 
@@ -477,6 +484,26 @@ vim.cmd([[
 
 vim.g.conceallevel=0
 
+
+vim.cmd([[
+  """""""""""""""""""""""""""
+  " Golang-specific options "
+  """""""""""""""""""""""""""
+
+  " tell syntastic that go, golint, and errcheck are installed
+  let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
+
+  " tell vim-go that goimports is installed
+  let g:go_fmt_command = "goimports"
+
+  " tell vim-go to highlight
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_structs = 1
+  let g:go_highlight_operators = 1
+  let g:go_highlight_build_constraints = 1
+]])
+
 vim.cmd([[
   " Format hash
   nnoremap <F8> $v%lohc<CR><CR><Up><C-r>"<Esc>:s/,/,\r/g<CR>:'[,']norm ==<CR>
@@ -500,10 +527,10 @@ vim.cmd([[
   map <Leader>rt :!ctags -R --extra=+f --exclude=@/Users/rmeyer/.ctags_ignore .<CR><CR>
 
   "Sets the tags directory to look backwards till it finds a tags dir
-  "set tags=expand('/Users/rmeyer/tmp/tags/')
+  set tags=expand('/Users/rmeyer/tmp/tags/')
 
   " enable gtags module
-  let g:gutentags_modules = ['ctags', 'gtags_cscope']
+  " let g:gutentags_modules = ['ctags'], 'gtags_cscope']
 
   " config project root markers.
   let g:gutentags_project_root = ['.root', '.git']
@@ -512,8 +539,8 @@ vim.cmd([[
   let g:gutentags_cache_dir = expand('~/.cache/tags')
 
   " change focus to quickfix window after search (optional).
-  let g:gutentags_plus_switch = 1
-  let g:gutentags_define_advanced_commands = 1
+  " let g:gutentags_plus_switch = 1
+  " let g:gutentags_define_advanced_commands = 1
 
  " associate  with ruby filetype
  au BufRead,BufNewFile ^M^W^W    setfiletype ruby
