@@ -1,0 +1,557 @@
+vim.call('plug#begin', '~/.config/nvim/plugged')
+
+-- Plug('neoclide/coc.nvim', {['do'] = vim.fn['yarn install --frozen-lockfile']})
+-- Plug 'antoinemadec/coc-fzf'
+
+-- Git
+-- Plug 'rhysd/committia.vim'
+-- Plug 'Xuyuanp/nerdtree-git-plugin'
+-- Plug 'tpope/vim-commentary'
+-- Plug 'tpope/vim-fugitive'
+-- Plug 'rbong/vim-flog'
+-- Plug 'tpope/vim-rhubarb'
+
+-- EditorConfig files
+Plug 'editorconfig/editorconfig-vim'
+
+-- Terraform
+-- Plug 'hashivim/vim-terraform'
+-- Plug 'juliosueiras/vim-terraform-completion'
+
+-- Linters
+-- Plug 'w0rp/ale'
+
+-- Python Language Server
+-- Plug('pappasam/coc-jedi', { ['do'] = 'yarn install --frozen-lockfile && yarn build'})
+-- Plug 'psf/black'
+
+
+-- Completion
+-- Plug 'ervandew/supertab'
+
+-- Rails / Ruby
+-- Plug 'thoughtbot/vim-rspec'
+-- Plug 'tpope/vim-rails'
+-- Plug 'tpope/vim-bundler'
+-- Plug 'vim-ruby/vim-ruby'
+-- Plug 'skalnik/vim-vroom'
+-- Plug 'tpope/vim-endwise'
+
+-- BUnch of languages
+-- Plug 'sheerun/vim-polyglot'
+
+-- Puppet
+-- Plug 'rodjek/vim-puppet'
+
+-- Chef
+-- Plug 'vadv/vim-chef'
+
+-- Javascript
+-- Plug 'HerringtonDarkholme/yats.vim'
+-- Plug 'Quramy/vim-js-pretty-template'
+-- Plug 'jelera/vim-javascript-syntax'
+-- Plug 'maksimr/vim-jsbeautify'
+
+-- Plug 'roxma/nvim-yarp'
+-- Plug 'roxma/vim-hug-neovim-rpc'
+
+-- Build Requires
+-- Plug('Shougo/vimproc.vim', {['do']= 'make'})
+-- Plug('neoclide/coc.nvim', {['do'] ='yarn install --frozen-lockfile'})
+
+-- "Before merge of files these existed
+vim.cmd("set cf")  -- set cf " Enable error files & error jumping.
+
+
+vim.cmd([[
+
+function! s:config_fuzzyall(...) abort
+  return extend(copy({
+  \   'converters': [
+  \     incsearch#config#fuzzy#converter(),
+  \     incsearch#config#fuzzyspell#converter()
+  \   ],
+  \ }), get(a:, 1, {}))
+endfunction
+
+  noremap <silent><expr> z/ incsearch#go(<SID>config_fuzzyall())
+  noremap <silent><expr> z? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
+  noremap <silent><expr> zg? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
+
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+
+nmap s <Plug>(easymotion-overwin-f2)
+map <Leader>k <Plug>(easymotion-k)
+
+  " Case insensitive
+let g:EasyMotion_smartcase = 1
+
+
+]])
+
+-- Vim-Go
+ vim.cmd([[
+" Navigation commands
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+
+" Alternate commands
+au FileType go nmap <Leader>ae <Plug>(go-alternate-edit)
+au FileType go nmap <Leader>av <Plug>(go-alternate-vertical)
+
+
+   " Use new vim 8.2 popup windows for Go Doc
+let g:go_doc_popup_window = 1
+   ]])
+
+
+vim.cmd([[
+ " #######################################################################
+ " Airline Vim Tagbar Setup
+ " if you want to disable auto detect, comment out those two lines
+ "let g:airline#extensions#disable_rtp_load = 1
+
+ let g:airline_extensions = ['hunks', 'coc']
+
+ set cinoptions=:0,p0,t0
+ set cinwords=if,else,while,do,for,switch,case
+ set formatoptions=tcqr
+ ]])
+
+
+-------------------------------------------------------------------------------
+--|                            VIM Settings                                   |
+--|                   (see gvimrc for gui vim settings)                       |
+--|                                                                           |
+--| Some highlights:                                                          |
+--|   jj = <esc>  Very useful for keeping your hands on the home row          |
+--|   ,n = toggle NERDTree off and on                                         |
+--|                                                                           |
+--|   ,f = fuzzy find all files                                               |
+--|   ,b = fuzzy find in all buffers                                          |
+--|   ,p = go to previous file                                                |
+--|                                                                           |
+--|   hh = inserts '=>'                                                       |
+--|   aa = inserts '@'                                                        |
+--|                                                                           |
+--|   ,h = new horizontal window                                              |
+--|   ,v = new vertical window                                                |
+--|                                                                           |
+--|   ,i = toggle invisibles                                                  |
+--|                                                                           |
+--|   enter and shift-enter = adds a new line after/before the current line   |
+--|                                                                           |
+--|   :call Tabstyle_tabs = set tab to real tabs                              |
+--|   :call Tabstyle_spaces = set tab to 2 spaces                             |
+--|                                                                           |
+--| Put machine/user specific settings in ~/.vimrc.local                      |
+--|  CTAGS  C-] - go to definition                                            |
+--|  C-T - Jump back from the definition.                                     |
+--|  C-W C-] - Open the definition in a horizontal split                      |
+--|  C-\ - Open the definition in a new tab                                   |
+--|  A-] - Open the definition in a vertical split                            |
+--|
+--|  After the tags are generated. You can use the following keys to tag into and tag out of functions:
+--|
+--|  Ctrl-Left_MouseClick - Go to definition                                  |
+--|  Ctrl-Right_MouseClick - Jump back from definition                        |
+
+nmap("<Leader>P", "+P")
+nmap("<Leader>p", "+p")
+vmap("<Leader>P", "+P")
+vmap("<Leader>d", "+d")
+vmap("<Leader>p", "+p")
+vmap("<Leader>y", "+y")
+
+-- Rspec
+map("Leader>t", ":call RunCurrentSpecFile()<CR>")
+map("Leader>s", ":call RunNearestSpec()<CR>")
+map("Leader>l", ":call RunLastSpec()<CR>")
+map("Leader>a", ":call RunAllSpecs()<CR>")
+
+
+-- Search
+map("z/", "<Plug>(incsearch-fuzzy-/)")
+map("z?", "<Plug>incsearch-fuzzy-?)")
+map("zg/", "<Plug>incsearch-fuzzy-stay)")
+
+vim.g.rspec_command = "bundle exec rspec --drb {spec}"
+vim.g.better_whitespace_enabled = 1
+vim.g.strip_whitespace_on_save = 1
+
+map("<Leader>l", ":lopen<CR>")
+
+vim.cmd([[
+ set listchars=tab:>-
+
+ "improve autocomplete menu color
+ highlight Pmenu ctermbg=238 gui=bold
+
+  " I fucking still can't get black to work this way"
+ " Removes trailing spaces
+ " BufWritePre * :%s/\s\+$//e
+ " autocmd BufRead *.py execute ':Black'
+ " autocmd BufWritePre *.py execute ':Black'
+
+  ]])
+
+vim.g.conceallevel=0
+
+
+vim.cmd([[
+  """""""""""""""""""""""""""
+  " Golang-specific options "
+  """""""""""""""""""""""""""
+
+  " tell syntastic that go, golint, and errcheck are installed
+  let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
+
+  " tell vim-go that goimports is installed
+  let g:go_fmt_command = "goimports"
+
+  " tell vim-go to highlight
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_structs = 1
+  let g:go_highlight_operators = 1
+  let g:go_highlight_build_constraints = 1
+]])
+
+vim.cmd([[
+  " Format hash
+  nnoremap <F8> $v%lohc<CR><CR><Up><C-r>"<Esc>:s/,/,\r/g<CR>:'[,']norm ==<CR>
+]])
+
+vim.opt.ts=2  -- Tabs are 2 spaces
+vim.opt.bs="2"  -- Backspace over everything in insert mode
+vim.opt.shiftwidth=2  -- Tabs under smart indenting
+
+vim.cmd([[
+  " Set javascript indents for 4
+  autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 expandtab
+  autocmd Filetype coffeescript setlocal ts=4 sw=4 sts=0 expandtab
+  autocmd Filetype python setlocal ts=4 sw=4 sts=0 expandtab
+
+
+  "Ctags and other shortcuts
+  "***********************************************
+  " map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+  " map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+  map <Leader>rt :!ctags -R --extra=+f --exclude=@/Users/rmeyer/.ctags_ignore .<CR><CR>
+
+  "Sets the tags directory to look backwards till it finds a tags dir
+  set tags=expand('~/.cache/tags/')
+
+  " enable gtags module
+  let g:gutentags_modules = ['ctags'], 'gtags_cscope']
+
+  " config project root markers.
+  let g:gutentags_project_root = ['.root', '.git']
+
+  " generate datebases in my cache directory, prevent gtags files polluting my project
+  let g:gutentags_cache_dir = expand('~/.cache/tags')
+
+  " change focus to quickfix window after search (optional).
+  let g:gutentags_plus_switch = 1
+  let g:gutentags_define_advanced_commands = 1
+
+ " associate  with ruby filetype
+ au BufRead,BufNewFile ^M^W^W    setfiletype ruby
+ au BufRead,BufNewFile Guardfile setfiletype ruby
+ au BufRead,BufNewFile *.prawn setfiletype ruby
+
+ "Indenting *******************************************************************
+ set ai " Automatically set the indent of a new line (local to buffer)
+ set si " smartindent (local to buffer)
+
+ " Indents
+ let g:rainbow_active = 1
+
+ autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+ " for html
+ autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+ " for css or scss
+ autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+
+ " Scrollbars ******************************************************************
+ set sidescrolloff=2
+ set numberwidth=4
+
+ " Windows *********************************************************************
+ set equalalways " Multiple windows, when created, are equal in size
+ set splitbelow splitright
+
+ "
+ "
+ "
+" Cursor cross-hairs highlights ***********************************************************
+au WinLeave * set nocursorline nocursorcolumn
+au WinEnter * set cursorline cursorcolumn
+set cursorline cursorcolumn
+set cursorline
+set cursorcolumn
+
+" Searching *******************************************************************
+map <Leader>nh :nohlsearch<CR>
+
+" map <F8> to reindent file
+noremap <F8> mzgg=G`z
+inoremap <F8> <ESC>mzgg=G`z<Insert>
+
+ " Colors **********************************************************************
+ set background=dark
+ syntax on " syntax highlighting
+
+ if has('gui_running')
+   " colorscheme ir_black
+   colorscheme wombat
+   set mouse=a
+   set nofoldenable " Turn off folding
+   set lazyredraw "faster processing
+ else
+   colorscheme wombat
+   " colorscheme base16-onedark
+   " colorscheme kalisi
+   " colorscheme ir_black
+   " colorscheme base16-tomorrow-night
+   " colorscheme hybrid
+
+   set termguicolors "Remove this in urxvt
+ end
+
+
+" Status Line *****************************************************************
+set showcmd
+set ruler " Show ruler
+set ch=2 " Make command line two lines high
+match LongLineWarning '\%120v.*' " Error format when a line is longer than 120
+
+
+" Line Wrapping ***************************************************************
+set nowrap
+set linebreak  " Wrap at word
+
+
+"Line Number
+"*****************************************
+set nu  " Line numbers on
+
+
+" Misc settings ***************************************************************
+set backspace=indent,eol,start
+set number " Show line numbers
+set matchpairs+=<:>
+set vb t_vb= " Turn off bell, this could be more annoying, but I'm not sure how
+
+set noerrorbells visualbell t_vb=
+if has('autocmd')
+  "autocmd GUIEnter * set visualbell t_vb=
+endif
+
+set noerrorbells
+set spell
+
+" File Stuff ******************************************************************
+syntax enable
+filetype on " Enable filetype detection
+filetype indent on " Enable filetype-specific indenting
+filetype plugin on " Enable filetype-specific plugins
+
+" Ruby stuff ******************************************************************
+" compiler ruby         " Enable compiler support for ruby
+" map <F5> :!ruby %<CR>
+
+" let g:ruby_host_prog = $HOME+'/.asdf/installs/ruby/2.7.2/bin/neovim-ruby-host'
+" let g:ruby_host_prog = '/Users/rmeyer/.asdf/installs/ruby/2.7.2/lib/ruby/gems/2.7.0/gems/neovim-0.8.1/exe/neovim-ruby-host'
+
+
+ " Change which file opens after executing :Rails command
+ " ****************************************
+ " let g:rails_default_file='config/database.yml'
+
+ " Insert New Line *************************************************************
+ map <S-Enter> O<ESC> " awesome, inserts new line without going into insert mode
+ map <Enter> o<ESC>
+
+ " -----------------------------------------------------------------------------
+ " |                              Plug-ins                                     |
+ " -----------------------------------------------------------------------------
+
+ " NERDTree ********************************************************************
+ :noremap <Leader>n :NERDTreeToggle<CR>
+ let NERDTreeHijackNetrw=1 " User instead of Netrw when doing an edit /foobar
+ let NERDTreeMouseMode=1 " Single click for everything
+ let NERDTreeShowHidden=1
+ let g:vroom_map_keys = 0
+
+ :noremap <Leader>z :NERDTreeFind<CR>
+ nnoremap ,m :w <BAR> !lessc % > %:t:r.css<CR><space>
+
+ " wildfire  ******************************************************************
+ " This selects the next closest text object.
+ let g:wildfire_fuel_map = "<TAB>"
+
+ " This selects the previous closest text object.
+ let g:wildfire_water_map = "<BS>"
+
+ " SplitJoin ******************************************************************
+ nmap <Leader>sj :SplitjoinJoin<cr>
+ nmap <Leader>ss :SplitjoinSplit<cr>
+
+ " Tmux Navigation **********************************************************
+ let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <Leader>" :TmuxNavigateLeft<cr>
+nnoremap <silent> <Leader>m :TmuxNavigateDown<cr>
+nnoremap <silent> <Leader>u :TmuxNavigateUp<cr>
+nnoremap <silent> <Leader>'  :TmuxNavigateRight<cr>
+" nnoremap <silent>  :TmuxNavigatePrevious<cr>
+
+ " Plugin key-mappings.
+ " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+ xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+ " Enable snipMate compatibility feature.
+ let g:neosnippet#enable_snipmate_compatibility = 1
+
+ " For conceal markers.
+ " For hiding quotes and double quotes
+ if has('conceal')
+   set conceallevel=0 concealcursor=niv
+ endif
+
+ let g:loaded_perl_provider = 0
+
+ let g:syntastic_always_populate_loc_list = 1
+ let g:syntastic_auto_loc_list = 1
+ let g:syntastic_check_on_open = 1
+ let g:syntastic_check_on_wq = 0
+
+ " (Optional)Remove Info(Preview) window
+ set completeopt-=preview
+
+ " (Optional)Hide Info(Preview) window after completions
+ autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+  " (Optional) Enable terraform plan to be include in filter
+  let g:syntastic_terraform_tffilter_plan = 1
+
+  " Formatting the sucker
+  let g:terraform_fmt_on_save=1
+
+
+  " (Optional) Default: 0, enable(1)/disable(0) plugin's keymapping
+  let g:terraform_completion_keys = 1
+
+  " # END TF Config
+
+  let g:flake8_show_in_file=1  " show
+  let g:flake8_show_in_gutter=1  " show
+  let g:flake8_show_quickfix=1  " show (default)
+  let g:flake8_error_marker='EE'     " set error marker to 'EE'
+  let g:flake8_warning_marker='WW'   " set warning marker to 'WW
+
+  " Supertab go down not up
+  let g:SuperTabDefaultCompletionType = "<c-n>"
+
+  " TypeScript
+  let g:nvim_typescript#javascript_support = 1
+
+  " Turn on line guides
+  let g:indent_guides_enable_on_vim_startup = 1
+
+
+  autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+
+ " " Ale ES Linter
+ let g:ale_fixers = {
+        \   'javascript': ['eslint'],
+        \   'python3': ['black', 'autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf', 'autoflake'],
+        \   'python': ['black','autopep8', 'isort', 'add_blank_lines_for_python_control_statements', 'yapf', 'autoflake'],
+        \   'ruby': ['remove_trailing_lines', 'rufo', 'sorbet', 'trim_whitespace', 'rubocop'],
+        \}
+
+""  let g:ale_completion_enabled = 0
+""  let g:ale_sign_column_always = 1
+""  let g:ale_lint_on_enter = 1
+""  let g:ale_python_flake8_auto_pipenv = 1
+""  let g:ale_fix_on_save = 1
+""
+""  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+""  let g:ale_sign_error = '✘'
+""  let g:ale_sign_warning = '⚠'
+
+ " nmap <silent> <C-e> <Plug>(ale_next_wrap)
+
+
+ "   function! LinterStatus() abort
+ "     let l:counts = ale#statusline#Count(bufnr(''))
+ "     let l:all_errors = l:counts.error + l:counts.style_error
+ "     let l:all_non_errors = l:counts.total - l:all_errors
+ "     return l:counts.total == 0 ? 'OK' : printf(
+ "           \   '%d⨉ %d⚠ ',
+ "           \   all_errors,
+ "           \   all_non_errors
+ "           \)
+ "   endfunction
+
+
+  " HTML Auto Close
+  let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.ts'
+  let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+
+
+  " ripgrep
+  set grepprg=rg\ --vimgrep
+  let g:ackprg='rg --vimgrep --no-heading'
+  " map <Leader>g :Rg
+
+  let g:fuzzy_ignore = '.o;.obj;.bak;.exe;.pyc;.pyo;.DS_Store;.db;.orig;.sql;.doc;*.*.pyc,tags'
+  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" --glob "!tags" --glob "!node_modules/*" --glob "!.git/*" --glob "!node_modules" '.shellescape(<q-args>), 1, <bang>0)
+  " command! -bang -nargs=* Find call FZF#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+  " map <Leader>g :Find
+
+  " zz for file types
+  autocmd FileType ruby   nnoremap <buffer> zz ibinding.pry<CR>
+  autocmd FileType python nnoremap <buffer> zz iimport pudb<CR>pudb.set_trace()<CR>
+
+
+  " AUTO COMPLETION WORK
+  " Use <c-space> to trigger completion.
+  if has('nvim')
+    inoremap <silent><expr> <c-space> coc#refresh()
+  else
+    inoremap <silent><expr> <c-@> coc#refresh()
+  endif
+
+" set completeopt+=menuone
+" set completeopt+=noselect
+" set completeopt+=preview
+" autocmd CompleteDone * if !pumvisible() | pclose | endif
+  inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+" use <tab> for trigger completion and navigate to the next complete item
+
+  function! CheckBackspace() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
+  inoremap <silent><expr> <Tab>
+        \ coc#pum#visible() ? coc#pum#next(1) :
+        \ CheckBackspace() ? "\<Tab>" :
+        \ coc#refresh()
+
+  " Put these lines at the very end of your vimrc file.
+
+  " Load all plugins now.
+  " Plugins need to be added to runtimepath before helptags can be generated.
+  packloadall
+
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored.
+silent! helptags ALL
+]])
