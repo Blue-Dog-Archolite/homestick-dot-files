@@ -10,5 +10,7 @@ package linuxbrew
 package nvm
 package thefuck
 package z
+theme bobthefish
 theme default
+theme fox
 theme zish

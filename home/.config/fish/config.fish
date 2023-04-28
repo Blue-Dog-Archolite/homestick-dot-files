@@ -12,8 +12,18 @@ set -x EDITOR nvim
 # "Starship"
 # starship init fish | source
 
+
+# SSH
+# if test -z (pgrep ssh-agent)
+  eval (ssh-agent -c)
+  set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
+  set -Ux SSH_AGENT_PID $SSH_AGENT_PID
+  set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
+# end
+
 # Setting PATH for Python 3.10
 # The original version is saved in /Users/rmeyer/.config/fish/config.fish.pysave
 set -x PATH "/Library/Frameworks/Python.framework/Versions/3.10/bin" "$PATH"
 
 direnv hook fish | source
+

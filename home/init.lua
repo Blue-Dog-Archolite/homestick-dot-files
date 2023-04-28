@@ -18,7 +18,7 @@ require('packer').startup(function(use)
   use 'junegunn/vim-easy-align'
 
 	-- GoLang
-	-- use{ 'faith/vim-go', run = ':GoUpdateBinaries' }
+	use{'fatih/vim-go', run = ':GoUpdateBinaries'}
   use 'ray-x/go.nvim'
   use 'ray-x/guihua.lua'
 

@@ -7,9 +7,9 @@ root: ~/dev/huntress/portal
 # project hooks.
 # Project hooks
 # Runs on project start, always
-on_project_start: make docker.up
+on_project_start:  docker-compose up elasticsearch postgres postgres_shard2 redis timescale -d
 # Run on project start, the first time
-# on_project_first_start: command
+on_project_first_start: aws-vault login --stdout huntress-sso
 # Run on project start, after the first time
 # on_project_restart: command
 # Run on project exit ( detaching from tmux session )
@@ -31,11 +31,10 @@ on_project_stop: make docker.down
 windows:
   - nvim: nvim .
   - git: git status
-  - rails: bin/spring rails c
+  - rails: berc
   - extras:
       layout: main-horizontal
       panes:
-        - guard: bundle exec guard
+        - guard: avbe guard
         - server: make dev.server
-        - proxy: cd ../test-tools && sh ./run_proxy.sh
 

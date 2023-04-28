@@ -116,3 +116,8 @@ tmp
 
 #pronto for commits
 bin/pronto.sh
+.pronto.yml
+
+
+# Holders
+docker-compose.override.yml.rob

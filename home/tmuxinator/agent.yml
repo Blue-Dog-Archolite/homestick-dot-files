@@ -1,6 +1,6 @@
 # /home/rmeyer/.config/tmuxinator/agent.yml
 name: agent
-root: ~/dev/huntress/agent
+root: /home/huntress/dev/huntress/agent
 # Optional tmux socket
 # socket_name: foo
 # Note that the pre and post options have been deprecated and will be replaced by
