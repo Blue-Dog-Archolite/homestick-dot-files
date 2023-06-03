@@ -17,6 +17,9 @@ require('packer').startup(function(use)
 	use 'vim-scripts/Align'
   use 'junegunn/vim-easy-align'
 
+	-- Spell checking help
+	use 'kamykn/spelunker.vim'
+
 	-- GoLang
 	use{'fatih/vim-go', run = ':GoUpdateBinaries'}
   use 'ray-x/go.nvim'
@@ -43,6 +46,11 @@ require('packer').startup(function(use)
 	-- FZF Search and replace
   use 'junegunn/fzf.vim'
   use{'junegunn/fzf', run = 'fzf#install'}
+
+	-- Navigation
+	-- Z for Vim
+	use 'easymotion/vim-easymotion'
+
 
 	-- Left bar
 	use 'nvim-neo-tree/neo-tree.nvim'
@@ -128,7 +136,7 @@ require('packer').startup(function(use)
   use 'andymass/vim-matchup'
 	use 'tpope/vim-surround'
 	use 'vim-scripts/matchit.zip'
-
+  use 'neovim/nvim-lspconfig'
 
   -- telescope.nvim is a highly extendable fuzzy finder over lists.
   use 'nvim-lua/plenary.nvim'
@@ -138,7 +146,6 @@ require('packer').startup(function(use)
 	use 'scrooloose/nerdtree'
   use 'tomtom/tlib_vim'
   use 'farmergreg/vim-lastplace'
-
 
   -- Load on a combination of conditions: specific filetypes or commands
   -- Also run code after load (see the "config" key)
@@ -170,12 +177,72 @@ require('packer').startup(function(use)
   }
 end)
 
--- require'nvim-tresitter.configs'.setup{
---	matchup = {
---		enable = true,
---	}
---}
---
+require'nvim-tresitter.configs'.setup{
+	matchup = {
+		enable = true,
+	}
+}
+
+
+-- Setup language servers.
+local lspconfig = require('lspconfig')
+lspconfig.pyright.setup {}
+lspconfig.tsserver.setup {}
+lspconfig.rust_analyzer.setup {
+  -- Server-specific settings. See `:help lspconfig-setup`
+  settings = {
+    ['rust-analyzer'] = {},
+  },
+}
+
+
+-- Auto Formatting
+vim.cmd([[
+  autocmd FileType lua nnoremap <buffer> <c-k> :call LuaFormat()<cr>
+  autocmd BufWrite *.lua call LuaFormat()
+]])
+
+
+-- Global mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
+-- Use LspAttach autocommand to only map the following keys
+-- after the language server attaches to the current buffer
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set('n', '<space>wl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, opts)
+    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+
+    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<space>f', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
 
 -- CTags setup
 vim.cmd([[
@@ -227,6 +294,8 @@ require'mapx'.setup{ global = true, whichkey = true }
 -- Hard to type *****************************************************************
 imap("jj", "<ESC>", "Exit insert mode")
 imap("kk", "->", "Arrow")
+imap("qq", "<ESC>", "Exit insert mode")
+imap("QQ", "<ESC>", "Exit insert mode")
 
 -- Enable error files and error jumping
 vim.cmd("set cf")
@@ -235,17 +304,23 @@ vim.cmd("set cf")
 
 -- TODO Add WhichKey Group Names
 local noremap_functions = {
-		-- f = ":GFiles<CR> ",
-		t = ":Tags<CR>",
-		j = ":TagbarToggle<CR>",
+
+		Q = "<nop>",
 		c = ":Commentary<CR>",
-		-- b = ":Buffers<CR>",
-		-- g = ":Find ",
-		w = ":WhichKey ",
+		h =  ":split^M^W^W<CR>",
+		j = ":TagbarToggle<CR>",
+		n = ":NERDTreeToggle<CR>",
+		q = "<nop>",
 		r = ":edit!<CR>",
-		v = ":vsp^M^W^W<cr>",
-		h =  ":split^M^W^W<cr>",
-		-- rs = ":Gsearch "
+		t = ":Tags<CR>",
+		v = ":vsp^M^W^W<CR>",
+		w = ":WhichKey ",
+		z = ":NERDTreeFind<CR>",
+    -- Find files using Telescope command-line sugar.
+    b = ":Telescope buffers<CR>",
+    f = ":Telescope find_files<CR>",
+    fh= ":Telescope help_tags<CR>",
+    g = ":Telescope live_grep<CR>",
 }
 
 -- Map the commands from above
@@ -253,15 +328,9 @@ for key, command in pairs(noremap_functions) do
   nnoremap( string.format('<Leader>%s', key), command, command)
 end
 
-
-vim.cmd([[
-  " Find files using Telescope command-line sugar.
-  nnoremap <leader>f <cmd>Telescope find_files<cr>
-  nnoremap <leader>g <cmd>Telescope live_grep<cr>
-  nnoremap <leader>b <cmd>Telescope buffers<cr>
-  nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-]])
-
+-- Disable q for recording as we dont care
+nnoremap("Q", "<nop>", "Don't let Q do ANYTHING")
+nnoremap("q", "<nop>", "Don't let Q do ANYTHING")
 
 -- Coc.vim
 vim.cmd([[
@@ -292,14 +361,12 @@ vim.cmd([[
 set dir=/tmp
 
 if &compatible
-set nocompatible               " Be iMproved
+		set nocompatible               " Be iMproved
 endif
 
-" syntax enable
-
 if has('unnamedplus')
-set clipboard=unnamed,unnamedplus
-set clipboard+=unnamed  " Yanks go on clipboard instead.
+		set clipboard=unnamed,unnamedplus
+		set clipboard+=unnamed  " Yanks go on clipboard instead.
 endif
 ]])
 
@@ -348,6 +415,35 @@ nnoremap <silent> <Leader>u :TmuxNavigateUp<cr>
 nnoremap <silent> <Leader>'  :TmuxNavigateRight<cr>
 ]])
 
+
+
+-- Spelling highlighting
+vim.cmd("set spell")
+
+-- -- https://vimawesome.com/plugin/spelunker-vim
+-- vim.cmd([[
+-- set nospell
+-- let g:enable_spelunker_vim = 1
+-- let g:enable_spelunker_vim_on_readonly = 1
+
+-- """ Make sure to check anything with prefixed with @
+-- let g:spelunker_disable_account_name_checking = 0
+
+-- """ Override highlight setting.
+-- highlight SpelunkerSpellBad cterm=underline ctermfg=NONE gui=underline guifg=#9e9e9e
+-- highlight SpelunkerComplexOrCompoundWord cterm=underline ctermfg=NONE gui=underline guifg=#00e1ff
+-- ]])
+
+
+-- Fuck Me here we go again
+local lspconfig = require('lspconfig')
+local lsp_defaults = lspconfig.util.default_config
+
+lsp_defaults.capabilities = vim.tbl_deep_extend(
+  'force',
+  lsp_defaults.capabilities,
+  require('cmp_nvim_lsp').default_capabilities()
+)
 
 
 -- NERDTree

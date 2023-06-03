@@ -1,5 +1,8 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --export AWS_PROFILE:huntress\x2dsso
+SETUVAR --export AWS_VAULT_BACKEND:file
+SETUVAR --export AWS_VAULT_PASS_PASSWORD_STORE_DIR:/home/huntress/\x2epassword\x2dstore/aws\x2dvault/
 SETUVAR CPPFLAGS:\x2dI/usr/local/opt/v8\x403\x2e15/include
 SETUVAR FZF_DEFAULT_OPTS:\x2d\x2dheight\x2040\x25
 SETUVAR FZF_DISABLE_KEYBINDINGS:0
@@ -9,10 +12,20 @@ SETUVAR FZF_PREVIEW_FILE_CMD:head\x20\x2dn\x2010
 SETUVAR FZF_TMUX_HEIGHT:40\x25
 SETUVAR LDFLAGS:\x2dL/usr/local/opt/v8\x403\x2e15/lib
 SETUVAR --export SHELL:/opt/homebrew/bin/fish
+SETUVAR --export SSH_AGENT_PID:2187360
+SETUVAR --export SSH_AUTH_SOCK:/tmp/ssh\x2dXXXXXXshOwoX/agent\x2e2187359
 SETUVAR TZ_LIST:Europe/Paris\x2cEMEA\x20office\x3bUS/Central\x2cUS\x20office
-SETUVAR __fish_initialized:3100
+SETUVAR __fish_initialized:3400
 SETUVAR __tf_func:function\x20__tf_alias\x20\x2dd\x20\x22Correct\x20your\x20previous\x20console\x20command\x22\x3b\x20\x20set\x20\x2dl\x20fucked_up_command\x20\x24history\x5b1\x5d\x3b\x20\x20env\x20TF_SHELL\x3dfish\x20TF_ALIAS\x3d__tf_alias\x20PYTHONIOENCODING\x3dutf\x2d8\x20thefuck\x20\x24fucked_up_command\x20THEFUCK_ARGUMENT_PLACEHOLDER\x20\x24argv\x20\x7c\x20read\x20\x2dl\x20unfucked_command\x3b\x20\x20if\x20\x5b\x20\x22\x24unfucked_command\x22\x20\x21\x3d\x20\x22\x22\x20\x5d\x3b\x20\x20\x20\x20eval\x20\x24unfucked_command\x3b\x20\x20\x20\x20builtin\x20history\x20delete\x20\x2d\x2dexact\x20\x2d\x2dcase\x2dsensitive\x20\x2d\x2d\x20\x24fucked_up_command\x3b\x20\x20\x20\x20builtin\x20history\x20merge\x3b\x20\x20end\x3bend\x3b
 SETUVAR __tf_vers:The\x20Fuck\x203\x2e32\x20using\x20Python\x203\x2e10\x2e2\x20and\x20Fish\x20Shell\x203\x2e3\x2e1
+SETUVAR budspencer_colors:000000\x1e083743\x1e445659\x1efdf6e3\x1eb58900\x1ecb4b16\x1edc121f\x1eaf005f\x1e6c71c4\x1e268bd2\x1e2aa198\x1e859900
+SETUVAR budspencer_cursors:\x5c033\x5d12\x3b\x23268bd2\x5c007\x1e\x5c033\x5d12\x3b\x23b58900\x5c007\x1e\x5c033\x5d12\x3b\x23af005f\x5c007\x1e\x5c033\x5d12\x3b\x236c71c4\x5c007
+SETUVAR budspencer_day:000000\x1e333333\x1e666666\x1effffff\x1effff00\x1eff6600\x1eff0000\x1eff0033\x1e3300ff\x1e00aaff\x1e00ffff\x1e00ff00
+SETUVAR budspencer_night:000000\x1e083743\x1e445659\x1efdf6e3\x1eb58900\x1ecb4b16\x1edc121f\x1eaf005f\x1e6c71c4\x1e268bd2\x1e2aa198\x1e859900
+SETUVAR budspencer_nocmdhist:c\x1ed\x1ell\x1els\x1em\x1es
+SETUVAR budspencer_pwdstyle:short\x1elong\x1enone
+SETUVAR budspencer_sessions_active:\x1d
+SETUVAR budspencer_sessions_active_pid:\x1d
 SETUVAR fish_color_autosuggestion:555\x1ebrblack
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:005fd7
@@ -35,11 +48,11 @@ SETUVAR fish_color_selection:white\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dbrbl
 SETUVAR fish_color_status:red
 SETUVAR fish_color_user:brgreen
 SETUVAR fish_color_valid_path:\x2d\x2dunderline
-SETUVAR fish_key_bindings:fish_default_key_bindings
+SETUVAR fish_key_bindings:fish_vi_key_bindings
 SETUVAR fish_pager_color_completion:\x1d
 SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:\x23\x28brew\x20\x2d\x2dprefix\x29\x1e\x23\x28brew\x20\x2d\x2dprefix\x29\x1e/Users/robert\x2er\x2emeyer/\x2efzf/bin\x1e/Users/rmeyer/\x2eyarn/bin\x1e/Users/rmeyer/\x2efzf/bin\x1e/home/rmeyer/\x2efzf/bin
+SETUVAR fish_user_paths:\x23\x28brew\x20\x2d\x2dprefix\x29\x1e/Users/robert\x2er\x2emeyer/\x2efzf/bin\x1e/Users/rmeyer/\x2eyarn/bin\x1e/Users/rmeyer/\x2efzf/bin\x1e/home/rmeyer/\x2efzf/bin
 SETUVAR keychain_init_args:\x2d\x2dquiet\x1e\x2d\x2dconfhost\x1e\x2d\x2dtimeout\x1e60\x1e\x2d\x2dagents\x1essh\x2cgpg
