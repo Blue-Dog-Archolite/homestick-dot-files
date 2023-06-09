@@ -1,3 +1,8 @@
+case "$-" in
+    *i*)        ;;
+    *)   return ;;
+esac
+
 set -x PATH "/opt/homebrew/bin" "$PATH"
 
 set -g fish_user_paths "#(brew --prefix)" $fish_user_paths
