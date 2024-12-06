@@ -177,58 +177,14 @@ require('pckr').add{
 }
 
 
-require("indent_blankline").setup {
-		-- for example, context is off by default, use this to turn it on
-		show_current_context = true,
-		show_current_context_start = true,
-}
 
 vim.opt.termguicolors = true
-
-
--- IndentBlankline
-local highlight = {
-		"RainbowRed",
-		"RainbowYellow",
-		"RainbowBlue",
-		"RainbowOrange",
-		"RainbowGreen",
-		"RainbowViolet",
-		"RainbowCyan",
-}
-
-local hooks = require "ibl.hooks"
--- create the highlight groups in the highlight setup hook, so they are reset
--- every time the colorscheme changes
-hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-		vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-		vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-		vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-		vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-		vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-		vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-		vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
-end)
-
-require("ibl").setup { indent = { highlight = highlight } }
 
 
 vim.opt.list = true
 vim.opt.listchars:append "space:⋅"
 vim.opt.listchars:append "eol:↴"
 
-require("indent_blankline").setup {
-		space_char_blankline = " ",
-		char_highlight_list = {
-				"IndentBlanklineIndent1",
-				"IndentBlanklineIndent2",
-				"IndentBlanklineIndent3",
-				"IndentBlanklineIndent4",
-				"IndentBlanklineIndent5",
-				"IndentBlanklineIndent6",
-		},
-
-}
 
 require'nvim-treesitter.configs'.setup {
 		ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -238,10 +194,36 @@ require'nvim-treesitter.configs'.setup {
 }
 
 
+local highlight = {
+    "RainbowRed",
+    "RainbowYellow",
+    "RainbowBlue",
+    "RainbowOrange",
+    "RainbowGreen",
+    "RainbowViolet",
+    "RainbowCyan",
+}
+
+local hooks = require "ibl.hooks"
+-- create the highlight groups in the highlight setup hook, so they are reset
+-- every time the colorscheme changes
+hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+    vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+    vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+    vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+    vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+    vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+    vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+    vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+end)
+
+require("ibl").setup { indent = { highlight = highlight } }
+
+
 -- Setup language servers.
 local lspconfig = require('lspconfig')
 lspconfig.pyright.setup {}
-lspconfig.tsserver.setup {}
+lspconfig.ts_ls.setup {}
 lspconfig.rust_analyzer.setup {
 		-- Server-specific settings. See `:help lspconfig-setup`
 		settings = {
