@@ -142,6 +142,8 @@ require('pckr').add{
 		'b0o/mapx.nvim';
 		'folke/which-key.nvim';
 
+		-- git icons
+		'nvim-tree/nvim-web-devicons';
 
 		-- End wrappers for functions and closes
 		'rstacruz/vim-closer';
