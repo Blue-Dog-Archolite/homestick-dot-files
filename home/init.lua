@@ -18,6 +18,9 @@ bootstrap_pckr()
 
 require('pckr').add{
 
+		-- Formatting
+		'stevearc/conform.nvim',
+
 		-- Rails
 		'skalnik/vim-vroom';
 		'thoughtbot/vim-rspec';
@@ -31,12 +34,6 @@ require('pckr').add{
 		-- Align text and keys
 		'vim-scripts/Align';
 		'junegunn/vim-easy-align';
-
-		--[[
-		-- Spell checking help
-		'kamykn/spelunker.vim';
-		]]--
-
 
 		-- GoLang
 		{'fatih/vim-go', run = ':GoUpdateBinaries'};
@@ -71,10 +68,6 @@ require('pckr').add{
 		-- Left bar
 		'nvim-neo-tree/neo-tree.nvim';
 
-		-- Searching
-		-- 'haya14busa/incsearch.vim';
-		-- 'haya14busa/incsearch-fuzzy.vim';
-
 		-- Tmux Keybindings
 		'christoomey/vim-tmux-navigator';
 		'knubie/vim-kitty-navigator';
@@ -89,7 +82,6 @@ require('pckr').add{
 		'kien/ctrlp.vim';
 		'ntpeters/vim-better-whitespace';
 		'Raimondi/delimitMate';
-
 
 		-- Nvim diffs
 		'sindrets/diffview.nvim';
@@ -385,8 +377,34 @@ let g:coc_global_extensions = [
 \ ]
 ]])
 
+-- Formatting
+require("conform").setup({
+  formatters_by_ft = {
+    lua = { "stylua" },
+    -- Conform will run multiple formatters sequentially
+    python = { "isort", "black" },
+    -- You can customize some of the format options for the filetype (:help conform.format)
+    rust = { "rustfmt", lsp_format = "fallback" },
+    -- Conform will run the first available formatter
+    javascript = { "prettierd", "prettier", stop_after_first = true },
+		ruby = {"rubocop"},
+  },
+})
 
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function(args)
+    require("conform").format({ bufnr = args.buf })
+  end,
+})
 
+require("conform").setup({
+  format_on_save = {
+    -- These options will be passed to conform.format()
+    timeout_ms = 500,
+    lsp_format = "fallback",
+  },
+})
 
 
 -- Required Indent for file type

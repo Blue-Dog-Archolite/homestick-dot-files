@@ -1,35 +1,5 @@
 # frozen_string_literal: true
 
-if defined? Pry::Prompt && defined? Rails
-  RAILS6 = Rails::VERSION::MAJOR == 6
-  app = RAILS6 ? Rails.application.class.module_parent_name : Rails.application.class.name
-  env = Pry::Helpers::Text.bold(Rails.env.upcase)
-  env = if Rails.env.production?
-          Pry::Helpers::Text.red(env)
-        else
-          Pry::Helpers::Text.green(env)
-        end
-  draw_prompt = lambda do |target_self, nest_level, pry, sep|
-    depth = RAILS6 ? pry.input_ring.size : pry.input_array.size
-    "#{app} (#{env}) " \
-    "(#{Pry.view_clip(target_self)}) " \
-    "#{'%03d' % depth}:#{nest_level}" \
-    "#{sep} "
-  end
-  Pry.config.prompt = Pry::Prompt.new(
-    'custom',
-    'Custom environment prompt',
-    [
-      proc do |target_self, nest_level, pry|
-        draw_prompt.call(target_self, nest_level, pry, '>')
-      end,
-      proc do |target_self, nest_level, pry|
-        draw_prompt.call(target_self, nest_level, pry, '*')
-      end
-    ]
-  )
-end
-
 if defined?(PryDebugger) || defined?(PryByebug)
   Pry.commands.alias_command 'c', 'continue'
   Pry.commands.alias_command 's', 'step'
