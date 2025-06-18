@@ -17,6 +17,8 @@ end
 bootstrap_pckr()
 
 require('pckr').add{
+  -- Icons
+	'echasnovski/mini.nvim';
 
 	-- Trailing whitespace
   'ntpeters/vim-better-whitespace';
@@ -323,45 +325,43 @@ vim.cmd("set history=1024")        -- Number of things to remember in history.
 
 require('mapx').setup{ global = true, whichkey = true }
 
--- Hard to type *****************************************************************
-imap("jj", "<ESC>", "Exit insert mode")
-imap("kk", "->", "Arrow")
-imap("qq", "<ESC>", "Exit insert mode")
-imap("QQ", "<ESC>", "Exit insert mode")
-
 -- Enable error files and error jumping
 vim.cmd("set cf")
 
 
+-- WhichKey Key bindings
+-- Hard to type *****************************************************************
+local wk = require("which-key")
+wk.add({
+    {
+      mode = { "i" },
+      { "QQ", "<ESC>", desc = "Exit insert mode", remap = true, silent = false },
+      { "jj", "<ESC>", desc = "Exit insert mode", remap = true, silent = false },
+      { "kk", "->", desc = "Arrow", remap = true, silent = false },
+      { "qq", "<ESC>", desc = "Exit insert mode", remap = true, silent = false },
+    },
+})
 
--- TODO Add WhichKey Group Names
-local noremap_functions = {
-	Q = "<nop>",
-	c = ":Commentary<CR>",
-	h =  ":split^M^W^W<CR>",
-	j = ":TagbarToggle<CR>",
-	n = ":NERDTreeToggle<CR>",
-	q = "<nop>",
-	r = ":edit!<CR>",
-	t = ":Tags<CR>",
-	v = ":vsp^M^W^W<CR>",
-	w = ":WhichKey ",
-	z = ":NERDTreeFind<CR>",
-	-- Find files using Telescope command-line sugar.
-	b = ":Telescope buffers<CR>",
-	f = ":Telescope find_files<CR>",
-	fh= ":Telescope help_tags<CR>",
-	g = ":Telescope live_grep<CR>",
-}
 
--- Map the commands from above
-for key, command in pairs(noremap_functions) do
-	nnoremap( string.format('<Leader>%s', key), command, command)
-end
-
--- Disable q for recording as we dont care
-nnoremap("Q", "<nop>", "Don't let Q do ANYTHING")
-nnoremap("q", "<nop>", "Don't let Q do ANYTHING")
+wk.add({
+    { "<Leader>Q", "<nop>", desc = "<nop>", remap = true, silent = false },
+    { "<Leader>b", ":Telescope buffers<CR>", desc = ":Telescope buffers<CR>", remap = true, silent = false },
+    { "<Leader>c", ":Commentary<CR>", desc = ":Commentary<CR>", remap = true, silent = false },
+    { "<Leader>f", ":Telescope find_files<CR>", desc = ":Telescope find_files<CR>", remap = true, silent = false },
+    { "<Leader>fh", ":Telescope help_tags<CR>", desc = ":Telescope help_tags<CR>", remap = true, silent = false },
+    { "<Leader>g", ":Telescope live_grep<CR>", desc = ":Telescope live_grep<CR>", remap = true, silent = false },
+    { "<Leader>h", ":split^M^W^W<CR>", desc = ":split^M^W^W<CR>", remap = true, silent = false },
+    { "<Leader>j", ":TagbarToggle<CR>", desc = ":TagbarToggle<CR>", remap = true, silent = false },
+    { "<Leader>n", ":NERDTreeToggle<CR>", desc = ":NERDTreeToggle<CR>", remap = true, silent = false },
+    { "<Leader>q", "<nop>", desc = "<nop>", remap = true, silent = false },
+    { "<Leader>r", ":edit!<CR>", desc = ":edit!<CR>", remap = true, silent = false },
+    { "<Leader>t", ":Tags<CR>", desc = ":Tags<CR>", remap = true, silent = false },
+    { "<Leader>v", ":vsp^M^W^W<CR>", desc = ":vsp^M^W^W<CR>", remap = true, silent = false },
+    { "<Leader>w", ":WhichKey ", desc = ":WhichKey ", remap = true, silent = false },
+    { "<Leader>z", ":NERDTreeFind<CR>", desc = ":NERDTreeFind<CR>", remap = true, silent = false },
+    { "Q", "<nop>", desc = "Don't let Q do ANYTHING", remap = true, silent = false },
+    { "q", "<nop>", desc = "Don't let Q do ANYTHING", remap = true, silent = false },
+})
 
 -- Coc.vim
 vim.cmd([[
