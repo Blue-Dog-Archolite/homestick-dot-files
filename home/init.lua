@@ -1,228 +1,234 @@
 local function bootstrap_pckr()
-		local pckr_path = vim.fn.stdpath("data") .. "/pckr/pckr.nvim"
+	local pckr_path = vim.fn.stdpath("data") .. "/pckr/pckr.nvim"
 
-		if not (vim.uv or vim.loop).fs_stat(pckr_path) then
-				vim.fn.system({
-						'git',
-						'clone',
-						"--filter=blob:none",
-						'https://github.com/lewis6991/pckr.nvim',
-						pckr_path
-				})
-		end
+	if not (vim.uv or vim.loop).fs_stat(pckr_path) then
+		vim.fn.system({
+			'git',
+			'clone',
+			"--filter=blob:none",
+			'https://github.com/lewis6991/pckr.nvim',
+			pckr_path
+		})
+	end
 
-		vim.opt.rtp:prepend(pckr_path)
+	vim.opt.rtp:prepend(pckr_path)
 end
 
 bootstrap_pckr()
 
 require('pckr').add{
 
-		-- Formatting
-		'stevearc/conform.nvim',
+	-- Trailing whitespace
+  'ntpeters/vim-better-whitespace';
 
-		-- Rails
-		'skalnik/vim-vroom';
-		'thoughtbot/vim-rspec';
-		'tpope/vim-bundler';
-		'tpope/vim-rails';
-		'vim-ruby/vim-ruby';
+	-- Formatting
+	'stevearc/conform.nvim',
 
-		-- Vim sensible defaults
-		'tpope/vim-sensible';
+	-- Rails
+	'skalnik/vim-vroom';
+	'thoughtbot/vim-rspec';
+	'tpope/vim-bundler';
+	'tpope/vim-rails';
+	'vim-ruby/vim-ruby';
 
-		-- Align text and keys
-		'vim-scripts/Align';
-		'junegunn/vim-easy-align';
+	-- Vim sensible defaults
+	'tpope/vim-sensible';
 
-		-- GoLang
-		{'fatih/vim-go', run = ':GoUpdateBinaries'};
-		'ray-x/go.nvim';
-		'ray-x/guihua.lua';
+	-- Align text and keys
+	'vim-scripts/Align';
+	'junegunn/vim-easy-align';
 
-		-- Nvim statup debugging
-		'dstein64/vim-startuptime';
+	-- GoLang
+	{'fatih/vim-go', run = ':GoUpdateBinaries'};
+	'ray-x/go.nvim';
+	'ray-x/guihua.lua';
 
-		-- Tags building and running
-		'ludovicchabant/vim-gutentags';
-		'majutsushi/tagbar';
-		'vim-scripts/taglist.vim';
+	-- Nvim statup debugging
+	'dstein64/vim-startuptime';
 
-		-- markdown previews
-		{'shime/vim-livedown', run = "npm install -g livedown"};
+	-- Tags building and running
+	'ludovicchabant/vim-gutentags';
+	'majutsushi/tagbar';
+	'vim-scripts/taglist.vim';
 
-		-- Read Editor config files
-		'editorconfig/editorconfig-vim';
+	-- markdown previews
+	{'shime/vim-livedown', run = "npm install -g livedown"};
 
-		-- Split join to merge strings
-		'AndrewRadev/splitjoin.vim';
+	-- Read Editor config files
+	'editorconfig/editorconfig-vim';
 
-		-- FZF Search and replace
-		'junegunn/fzf.vim';
+	-- Split join to merge strings
+	'AndrewRadev/splitjoin.vim';
 
-		-- Navigation
-		-- Z for Vim
-		'easymotion/vim-easymotion';
+	-- FZF Search and replace
+	'junegunn/fzf.vim';
 
-
-		-- Left bar
-		'nvim-neo-tree/neo-tree.nvim';
-
-		-- Tmux Keybindings
-		'christoomey/vim-tmux-navigator';
-		'knubie/vim-kitty-navigator';
-
-		-- String replacements
-		'tpope/vim-abolish';
-
-		-- Editor Layout
-		'vim-airline/vim-airline';
-
-		-- Auto Completion
-		'kien/ctrlp.vim';
-		'ntpeters/vim-better-whitespace';
-		'Raimondi/delimitMate';
-
-		-- Nvim diffs
-		'sindrets/diffview.nvim';
-
-		-- Vim indent
-		'preservim/vim-indent-guides';
-
-		-- Indent colorized
-		'luochen1990/rainbow';
-		"lukas-reineke/indent-blankline.nvim";
-
-		-- Colors
-		'altercation/solarized';
-		'chriskempson/base16-vim';
-		'chriskempson/tomorrow-theme';
-		'freeo/vim-kalisi';
-		'mhartington/oceanic-next';
-		'twerth/ir_black';
-		'vim-scripts/Wombat';
-		'w0ng/vim-hybrid';
-
-		-- Searching
-		'jlanzarotta/bufexplorer';
-		'mileszs/ack.vim';
+	-- Navigation
+	-- Z for Vim
+	'easymotion/vim-easymotion';
 
 
-		-- Git
-		'Xuyuanp/nerdtree-git-plugin';
-		'rbong/vim-flog';
-		'rhysd/committia.vim';
-		'tpope/vim-fugitive';
-		'tpope/vim-rhubarb';
+	-- Left bar
+	'nvim-neo-tree/neo-tree.nvim';
 
-		-- CocNvim workers
-		{'neoclide/coc.nvim', run = 'yarn install --frozen-lockfile'};
-		'antoinemadec/coc-fzf';
+	-- Tmux Keybindings
+	'christoomey/vim-tmux-navigator';
+	'knubie/vim-kitty-navigator';
+
+	-- String replacements
+	'tpope/vim-abolish';
+
+	-- Editor Layout
+	'vim-airline/vim-airline';
+
+	-- Auto Completion
+	'kien/ctrlp.vim';
+	'ntpeters/vim-better-whitespace';
+	'Raimondi/delimitMate';
+
+	-- Nvim diffs
+	'sindrets/diffview.nvim';
+
+	-- Vim indent
+	'preservim/vim-indent-guides';
+
+	-- Indent colorized
+	'luochen1990/rainbow';
+	"lukas-reineke/indent-blankline.nvim";
+
+	-- Colors
+	'altercation/solarized';
+	'chriskempson/base16-vim';
+	'chriskempson/tomorrow-theme';
+	'freeo/vim-kalisi';
+	'mhartington/oceanic-next';
+	'twerth/ir_black';
+	'vim-scripts/Wombat';
+	'w0ng/vim-hybrid';
+
+	-- Searching
+	'jlanzarotta/bufexplorer';
+	'mileszs/ack.vim';
 
 
-		-- Selection of text
-		'tpope/vim-commentary';
-		'gcmt/wildfire.vim';
+	-- Git
+	'Xuyuanp/nerdtree-git-plugin';
+	'rbong/vim-flog';
+	'rhysd/committia.vim';
+	'tpope/vim-fugitive';
+	'tpope/vim-rhubarb';
 
-		-- Copy highlighting
-		'machakann/vim-highlightedyank';
+	-- CocNvim workers
+	{'neoclide/coc.nvim', run = 'yarn install --frozen-lockfile'};
+	'antoinemadec/coc-fzf';
 
-		-- Haml highlighter
-		'tpope/vim-haml';
 
-		-- Lua key manpping plugin
-		'b0o/mapx.nvim';
-		'folke/which-key.nvim';
+	-- Selection of text
+	'tpope/vim-commentary';
+	'gcmt/wildfire.vim';
 
-		-- git icons
-		'nvim-tree/nvim-web-devicons';
+	-- Copy highlighting
+	'machakann/vim-highlightedyank';
 
-		-- End wrappers for functions and closes
-		'rstacruz/vim-closer';
-		'tpope/vim-endwise';
-		'andymass/vim-matchup';
-		'tpope/vim-surround';
-		'vim-scripts/matchit.zip';
-		'neovim/nvim-lspconfig';
+	-- Haml highlighter
+	'tpope/vim-haml';
 
-		-- telescope.nvim is a highly extendable fuzzy finder over lists.
-		'nvim-lua/plenary.nvim';
-		'nvim-telescope/telescope.nvim';
+	-- Lua key manpping plugin
+	'b0o/mapx.nvim';
+	'folke/which-key.nvim';
 
-		-- Left navigation and return locations
-		'scrooloose/nerdtree';
-		'tomtom/tlib_vim';
-		'farmergreg/vim-lastplace';
+	-- git icons
+	'nvim-tree/nvim-web-devicons';
 
-		-- Plugins can have post-install/update hooks
-		{'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'};
+	-- End wrappers for functions and closes
+	'rstacruz/vim-closer';
+	'tpope/vim-endwise';
+	'andymass/vim-matchup';
+	'tpope/vim-surround';
+	'vim-scripts/matchit.zip';
+	'neovim/nvim-lspconfig';
 
-		-- Post-install/update hook with neovim command
-		{
-				'nvim-treesitter/nvim-treesitter',
-				run = ':TSUpdate'
-		};
+	-- telescope.nvim is a highly extendable fuzzy finder over lists.
+	'nvim-lua/plenary.nvim';
+	'nvim-telescope/telescope.nvim';
 
-		-- Git display
-		{
-				'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
-				config = function() require('gitsigns').setup() end
-		};
+	-- Left navigation and return locations
+	'scrooloose/nerdtree';
+	'tomtom/tlib_vim';
+	'farmergreg/vim-lastplace';
+
+	-- Plugins can have post-install/update hooks
+	{
+		'iamcco/markdown-preview.nvim',
+		run = 'cd app && yarn install',
+		cmd = 'MarkdownPreview'
+	};
+
+	-- Post-install/update hook with neovim command
+	{
+		'nvim-treesitter/nvim-treesitter',
+		run = ':TSUpdate'
+	};
+
+	-- Git display
+	{
+		'lewis6991/gitsigns.nvim',
+		requires = { 'nvim-lua/plenary.nvim' },
+		config = function() require('gitsigns').setup() end
+	};
 }
 
 
-
 vim.opt.termguicolors = true
-
 
 vim.opt.list = true
 vim.opt.listchars:append "space:⋅"
 vim.opt.listchars:append "eol:↴"
 
 
-require'nvim-treesitter.configs'.setup {
-		ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-		highlight = {
-				enable = true,
-		},
+require('nvim-treesitter.configs').setup {
+	ensure_installed = "all",
+	-- one of "all", "maintained" (parsers with maintainers), or a list of languages
+	highlight = {
+		enable = true,
+	},
 }
-
 
 local highlight = {
-    "RainbowRed",
-    "RainbowYellow",
-    "RainbowBlue",
-    "RainbowOrange",
-    "RainbowGreen",
-    "RainbowViolet",
-    "RainbowCyan",
+	"RainbowRed",
+	"RainbowYellow",
+	"RainbowBlue",
+	"RainbowOrange",
+	"RainbowGreen",
+	"RainbowViolet",
+	"RainbowCyan",
 }
+
 
 local hooks = require "ibl.hooks"
 -- create the highlight groups in the highlight setup hook, so they are reset
 -- every time the colorscheme changes
 hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-    vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-    vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-    vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-    vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-    vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-    vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-    vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+	vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+	vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+	vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+	vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+	vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+	vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+	vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
 end)
 
 require("ibl").setup { indent = { highlight = highlight } }
-
 
 -- Setup language servers.
 local lspconfig = require('lspconfig')
 lspconfig.pyright.setup {}
 lspconfig.ts_ls.setup {}
 lspconfig.rust_analyzer.setup {
-		-- Server-specific settings. See `:help lspconfig-setup`
-		settings = {
-				['rust-analyzer'] = {},
-		},
+	-- Server-specific settings. See `:help lspconfig-setup`
+	settings = {
+		['rust-analyzer'] = {},
+	},
 }
 
 
@@ -236,36 +242,37 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
-		group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-		callback = function(ev)
-				-- Enable completion triggered by <c-x><c-o>
-				vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+	group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+	callback = function(ev)
+		-- Enable completion triggered by <c-x><c-o>
+		vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-				-- Buffer local mappings.
-				-- See `:help vim.lsp.*` for documentation on any of the below functions
-				local opts = { buffer = ev.buf }
-				vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+		-- Buffer local mappings.
+		-- See `:help vim.lsp.*` for documentation on any of the below functions
+		local opts = { buffer = ev.buf }
+		vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
 
-				vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+		vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
 
-				vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-				vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-				vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-				vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-				vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-				vim.keymap.set('n', '<space>wl', function()
-						print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-				end, opts)
-				vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+		vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+		vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+		vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+		vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+		vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+		vim.keymap.set('n', '<space>wl', function()
+			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+		end, opts)
+		vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
 
-				vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-				vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-				vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-				vim.keymap.set('n', '<space>f', function()
-						vim.lsp.buf.format { async = true }
-				end, opts)
-		end,
+		vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+		vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+		vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+		vim.keymap.set('n', '<space>f', function()
+			vim.lsp.buf.format { async = true }
+		end, opts)
+	end,
 })
+
 
 -- CTags setup
 vim.cmd([[
@@ -286,6 +293,7 @@ let g:gutentags_cache_dir = expand('~/.cache/tags')
 let g:gutentags_plus_switch = 1
 let g:gutentags_define_advanced_commands = 1
 ]])
+
 
 
 vim.cmd([[
@@ -313,7 +321,8 @@ vim.cmd("syntax enable")
 vim.cmd("set timeoutlen=250")
 vim.cmd("set history=1024")        -- Number of things to remember in history.
 
-require'mapx'.setup{ global = true, whichkey = true }
+require('mapx').setup{ global = true, whichkey = true }
+
 -- Hard to type *****************************************************************
 imap("jj", "<ESC>", "Exit insert mode")
 imap("kk", "->", "Arrow")
@@ -327,28 +336,27 @@ vim.cmd("set cf")
 
 -- TODO Add WhichKey Group Names
 local noremap_functions = {
-
-		Q = "<nop>",
-		c = ":Commentary<CR>",
-		h =  ":split^M^W^W<CR>",
-		j = ":TagbarToggle<CR>",
-		n = ":NERDTreeToggle<CR>",
-		q = "<nop>",
-		r = ":edit!<CR>",
-		t = ":Tags<CR>",
-		v = ":vsp^M^W^W<CR>",
-		w = ":WhichKey ",
-		z = ":NERDTreeFind<CR>",
-		-- Find files using Telescope command-line sugar.
-		b = ":Telescope buffers<CR>",
-		f = ":Telescope find_files<CR>",
-		fh= ":Telescope help_tags<CR>",
-		g = ":Telescope live_grep<CR>",
+	Q = "<nop>",
+	c = ":Commentary<CR>",
+	h =  ":split^M^W^W<CR>",
+	j = ":TagbarToggle<CR>",
+	n = ":NERDTreeToggle<CR>",
+	q = "<nop>",
+	r = ":edit!<CR>",
+	t = ":Tags<CR>",
+	v = ":vsp^M^W^W<CR>",
+	w = ":WhichKey ",
+	z = ":NERDTreeFind<CR>",
+	-- Find files using Telescope command-line sugar.
+	b = ":Telescope buffers<CR>",
+	f = ":Telescope find_files<CR>",
+	fh= ":Telescope help_tags<CR>",
+	g = ":Telescope live_grep<CR>",
 }
 
 -- Map the commands from above
 for key, command in pairs(noremap_functions) do
-		nnoremap( string.format('<Leader>%s', key), command, command)
+	nnoremap( string.format('<Leader>%s', key), command, command)
 end
 
 -- Disable q for recording as we dont care
@@ -379,31 +387,31 @@ let g:coc_global_extensions = [
 
 -- Formatting
 require("conform").setup({
-  formatters_by_ft = {
-    lua = { "stylua" },
-    -- Conform will run multiple formatters sequentially
-    python = { "isort", "black" },
-    -- You can customize some of the format options for the filetype (:help conform.format)
-    rust = { "rustfmt", lsp_format = "fallback" },
-    -- Conform will run the first available formatter
-    javascript = { "prettierd", "prettier", stop_after_first = true },
+	formatters_by_ft = {
+		lua = { "stylua" },
+		-- Conform will run multiple formatters sequentially
+		python = { "isort", "black" },
+		-- You can customize some of the format options for the filetype (:help conform.format)
+		rust = { "rustfmt", lsp_format = "fallback" },
+		-- Conform will run the first available formatter
+		javascript = { "prettierd", "prettier", stop_after_first = true },
 		ruby = {"rubocop"},
-  },
+	},
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function(args)
-    require("conform").format({ bufnr = args.buf })
-  end,
+	pattern = "*",
+	callback = function(args)
+		require("conform").format({ bufnr = args.buf })
+	end,
 })
 
 require("conform").setup({
-  format_on_save = {
-    -- These options will be passed to conform.format()
-    timeout_ms = 500,
-    lsp_format = "fallback",
-  },
+	format_on_save = {
+		-- These options will be passed to conform.format()
+		timeout_ms = 500,
+		lsp_format = "fallback",
+	},
 })
 
 
@@ -469,65 +477,65 @@ vim.cmd([[
 " AUTO COMPLETION WORK
 " Use <c-space> to trigger completion.
 if has('nvim')
-		inoremap <silent><expr> <c-space> coc#refresh()
+	inoremap <silent><expr> <c-space> coc#refresh()
 else
-		inoremap <silent><expr> <c-@> coc#refresh()
-		endif
+	inoremap <silent><expr> <c-@> coc#refresh()
+	endif
 
-		" set completeopt+=menuone
-		" set completeopt+=noselect
-		" set completeopt+=preview
-		" autocmd CompleteDone * if !pumvisible() | pclose | endif
-		inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
-		" use <tab> for trigger completion and navigate to the next complete item
+	" set completeopt+=menuone
+	" set completeopt+=noselect
+	" set completeopt+=preview
+	" autocmd CompleteDone * if !pumvisible() | pclose | endif
+	inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+	" use <tab> for trigger completion and navigate to the next complete item
 
-		function! CheckBackspace() abort
-		let col = col('.') - 1
-		return !col || getline('.')[col - 1]  =~# '\s'
-		endfunction
+	function! CheckBackspace() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
+	endfunction
 
-		inoremap <silent><expr> <Tab>
-		\ coc#pum#visible() ? coc#pum#next(1) :
-		\ CheckBackspace() ? "\<Tab>" :
-		\ coc#refresh()
+	inoremap <silent><expr> <Tab>
+	\ coc#pum#visible() ? coc#pum#next(1) :
+	\ CheckBackspace() ? "\<Tab>" :
+	\ coc#refresh()
 
-		]])
+	]])
 
--- System tooling
-vim.cmd([[
-"set Directory for swap and backup files
-set dir=/tmp
+	-- System tooling
+	vim.cmd([[
+	"set Directory for swap and backup files
+	set dir=/tmp
 
-if &compatible
+	if &compatible
 		set nocompatible               " Be iMproved
 		endif
 
 		if has('unnamedplus')
-				set clipboard=unnamed,unnamedplus
-				set clipboard+=unnamed  " Yanks go on clipboard instead.
-				endif
-]])
+			set clipboard=unnamed,unnamedplus
+			set clipboard+=unnamed  " Yanks go on clipboard instead.
+			endif
+			]])
 
 
-		-- TODO: fix this crap
+			-- TODO: fix this crap
 
-		vim.cmd([[
-		" Find files using Telescope command-line sugar.
-		nnoremap <leader>f <cmd>Telescope find_files<cr>
-		nnoremap <leader>g <cmd>Telescope live_grep<cr>
-		nnoremap <leader>b <cmd>Telescope buffers<cr>
-		nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-		]])
+			vim.cmd([[
+			" Find files using Telescope command-line sugar.
+			nnoremap <leader>f <cmd>Telescope find_files<cr>
+			nnoremap <leader>g <cmd>Telescope live_grep<cr>
+			nnoremap <leader>b <cmd>Telescope buffers<cr>
+			nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+			]])
 
-		for key, command in pairs(noremap_functions) do
-				nnoremap( string.format('<Leader>%s', key), command, command)
-		end
+			-- for key, command in pairs(noremap_functions) do
+			-- 	nnoremap( string.format('<Leader>%s', key), command, command)
+			-- end
 
 
-		-- Easy motion and search
-		vim.cmd([[
-		function! s:config_fuzzyall(...) abort
-		return extend(copy({
+			-- Easy motion and search
+			vim.cmd([[
+			function! s:config_fuzzyall(...) abort
+			return extend(copy({
 				\   'converters': [
 				\     incsearch#config#fuzzy#converter(),
 				\     incsearch#config#fuzzyspell#converter()
