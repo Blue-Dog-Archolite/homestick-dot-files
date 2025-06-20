@@ -187,6 +187,11 @@ vim.opt.list = true
 vim.opt.listchars:append "space:⋅"
 vim.opt.listchars:append "eol:↴"
 
+vim.cmd([[
+		let g:better_whitespace_enabled=1
+		let g:strip_whitespace_on_save=1
+]])
+
 
 require('nvim-treesitter.configs').setup {
 	ensure_installed = "all",
