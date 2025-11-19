@@ -1,4 +1,3 @@
 function home
   cd ~
-
 end

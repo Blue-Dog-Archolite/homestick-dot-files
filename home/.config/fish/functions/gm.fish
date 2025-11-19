@@ -1,3 +1,3 @@
 function gm
-git mergetool
+		git mergetool
 end
