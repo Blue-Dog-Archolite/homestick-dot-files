@@ -167,10 +167,10 @@ require('pckr').add{
 	};
 
 	-- Post-install/update hook with neovim command
-	{
-		'nvim-treesitter/nvim-treesitter',
-		run = ':TSUpdate'
-	};
+	-- {
+	-- 	'nvim-treesitter/nvim-treesitter',
+	-- 	run = ':TSUpdate'
+	-- };
 
 	-- Git display
 	{
@@ -193,13 +193,13 @@ vim.cmd([[
 ]])
 
 
-require('nvim-treesitter.configs').setup {
-	ensure_installed = "all",
-	-- one of "all", "maintained" (parsers with maintainers), or a list of languages
-	highlight = {
-		enable = true,
-	},
-}
+-- require('nvim-treesitter.configs').setup {
+-- 	ensure_installed = "all",
+-- 	-- one of "all", "maintained" (parsers with maintainers), or a list of languages
+-- 	highlight = {
+-- 		enable = true,
+-- 	},
+-- }
 
 local highlight = {
 	"RainbowRed",
@@ -228,15 +228,7 @@ end)
 require("ibl").setup { indent = { highlight = highlight } }
 
 -- Setup language servers.
-local lspconfig = require('lspconfig')
-lspconfig.pyright.setup {}
-lspconfig.ts_ls.setup {}
-lspconfig.rust_analyzer.setup {
-	-- Server-specific settings. See `:help lspconfig-setup`
-	settings = {
-		['rust-analyzer'] = {},
-	},
-}
+vim.lsp.enable('pyright')
 
 
 -- Global mappings.
@@ -400,7 +392,7 @@ require("conform").setup({
 		rust = { "rustfmt", lsp_format = "fallback" },
 		-- Conform will run the first available formatter
 		javascript = { "prettierd", "prettier", stop_after_first = true },
-		ruby = {"rubocop"},
+		ruby = {"rufo"},
 	},
 })
 
