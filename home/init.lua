@@ -356,26 +356,29 @@ if ok_wk then
 end
 
 -- Coc.vim
-vim.cmd([[
-" Coc.Vim
-let g:coc_global_extensions = [
-\ 'coc-diagnostic',
-\ 'coc-dictionary',
-\ 'coc-docker',
-\ 'coc-go',
-\ 'coc-html',
-\ 'coc-json',
-\ 'coc-lua',
-\ 'coc-phpls',
-\ 'coc-post',
-\ 'coc-solargraph',
-\ 'coc-syntax',
-\ 'coc-tag',
-\ 'coc-tsserver',
-\ 'coc-ultisnips',
-\ 'coc-word'
-\ ]
-]])
+-- Only setup coc extensions if coc is available
+if vim.fn.isdirectory(vim.fn.expand("~/.local/share/nvim/pckr/coc.nvim")) == 1 then
+	vim.cmd([[
+	" Coc.Vim
+	let g:coc_global_extensions = [
+	\ 'coc-diagnostic',
+	\ 'coc-dictionary',
+	\ 'coc-docker',
+	\ 'coc-go',
+	\ 'coc-html',
+	\ 'coc-json',
+	\ 'coc-lua',
+	\ 'coc-phpls',
+	\ 'coc-post',
+	\ 'coc-solargraph',
+	\ 'coc-syntax',
+	\ 'coc-tag',
+	\ 'coc-tsserver',
+	\ 'coc-ultisnips',
+	\ 'coc-word'
+	\ ]
+	]])
+end
 
 -- Formatting
 local ok_conform, conform = pcall(require, "conform")
@@ -459,13 +462,15 @@ vim.cmd([[
 ]])
 
 -- Autocomplete workers
-vim.cmd([[
-" AUTO COMPLETION WORK
-" Use <c-space> to trigger completion.
-if has('nvim')
-	inoremap <silent><expr> <c-space> coc#refresh()
-else
-	inoremap <silent><expr> <c-@> coc#refresh()
+-- Only setup coc keybindings if coc is available
+if vim.fn.isdirectory(vim.fn.expand("~/.local/share/nvim/pckr/coc.nvim")) == 1 then
+	vim.cmd([[
+	" AUTO COMPLETION WORK
+	" Use <c-space> to trigger completion.
+	if has('nvim')
+		inoremap <silent><expr> <c-space> coc#refresh()
+	else
+		inoremap <silent><expr> <c-@> coc#refresh()
 	endif
 
 	" set completeopt+=menuone
@@ -476,16 +481,16 @@ else
 	" use <tab> for trigger completion and navigate to the next complete item
 
 	function! CheckBackspace() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~# '\s'
+		let col = col('.') - 1
+		return !col || getline('.')[col - 1]  =~# '\s'
 	endfunction
 
 	inoremap <silent><expr> <Tab>
 	\ coc#pum#visible() ? coc#pum#next(1) :
 	\ CheckBackspace() ? "\<Tab>" :
 	\ coc#refresh()
-
 	]])
+end
 
 -- System tooling
 vim.cmd([[
