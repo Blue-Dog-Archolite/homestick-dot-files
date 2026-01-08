@@ -118,10 +118,6 @@ require("pckr").add({
 	"tpope/vim-fugitive",
 	"tpope/vim-rhubarb",
 
-	-- CocNvim workers
-	{ "neoclide/coc.nvim", run = "yarn install --frozen-lockfile" },
-	"antoinemadec/coc-fzf",
-
 	-- Selection of text
 	"tpope/vim-commentary",
 	"gcmt/wildfire.vim",
@@ -165,8 +161,8 @@ require("pckr").add({
 
 	-- Post-install/update hook with neovim command
 	-- {
-	-- 	'nvim-treesitter/nvim-treesitter',
-	-- 	run = ':TSUpdate'
+	--	'nvim-treesitter/nvim-treesitter',
+	--	run = ':TSUpdate'
 	-- };
 
 	-- Git display
@@ -191,11 +187,11 @@ vim.cmd([[
 ]])
 
 -- require('nvim-treesitter.configs').setup {
--- 	ensure_installed = "all",
--- 	-- one of "all", "maintained" (parsers with maintainers), or a list of languages
--- 	highlight = {
--- 		enable = true,
--- 	},
+--	ensure_installed = "all",
+--	-- one of "all", "maintained" (parsers with maintainers), or a list of languages
+--	highlight = {
+--		enable = true,
+--	},
 -- }
 
 local highlight = {
@@ -355,31 +351,6 @@ if ok_wk then
 	})
 end
 
--- Coc.vim
--- Only setup coc extensions if coc is available
-if vim.fn.isdirectory(vim.fn.expand("~/.local/share/nvim/pckr/coc.nvim")) == 1 then
-	vim.cmd([[
-	" Coc.Vim
-	let g:coc_global_extensions = [
-	\ 'coc-diagnostic',
-	\ 'coc-dictionary',
-	\ 'coc-docker',
-	\ 'coc-go',
-	\ 'coc-html',
-	\ 'coc-json',
-	\ 'coc-lua',
-	\ 'coc-phpls',
-	\ 'coc-post',
-	\ 'coc-solargraph',
-	\ 'coc-syntax',
-	\ 'coc-tag',
-	\ 'coc-tsserver',
-	\ 'coc-ultisnips',
-	\ 'coc-word'
-	\ ]
-	]])
-end
-
 -- Formatting
 local ok_conform, conform = pcall(require, "conform")
 if ok_conform then
@@ -461,37 +432,6 @@ vim.cmd([[
 :noremap <Leader>z :NERDTreeFind<CR>
 ]])
 
--- Autocomplete workers
--- Only setup coc keybindings if coc is available
-if vim.fn.isdirectory(vim.fn.expand("~/.local/share/nvim/pckr/coc.nvim")) == 1 then
-	vim.cmd([[
-	" AUTO COMPLETION WORK
-	" Use <c-space> to trigger completion.
-	if has('nvim')
-		inoremap <silent><expr> <c-space> coc#refresh()
-	else
-		inoremap <silent><expr> <c-@> coc#refresh()
-	endif
-
-	" set completeopt+=menuone
-	" set completeopt+=noselect
-	" set completeopt+=preview
-	" autocmd CompleteDone * if !pumvisible() | pclose | endif
-	inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
-	" use <tab> for trigger completion and navigate to the next complete item
-
-	function! CheckBackspace() abort
-		let col = col('.') - 1
-		return !col || getline('.')[col - 1]  =~# '\s'
-	endfunction
-
-	inoremap <silent><expr> <Tab>
-	\ coc#pum#visible() ? coc#pum#next(1) :
-	\ CheckBackspace() ? "\<Tab>" :
-	\ coc#refresh()
-	]])
-end
-
 -- System tooling
 vim.cmd([[
 	"set Directory for swap and backup files
@@ -518,7 +458,7 @@ vim.cmd([[
 			]])
 
 -- for key, command in pairs(noremap_functions) do
--- 	nnoremap( string.format('<Leader>%s', key), command, command)
+--	nnoremap( string.format('<Leader>%s', key), command, command)
 -- end
 
 -- Easy motion and search
@@ -544,7 +484,7 @@ vim.cmd([[
 				" if you want to disable auto detect, comment out those two lines
 				"let g:airline#extensions#disable_rtp_load = 1
 
-				let g:airline_extensions = ['hunks', 'coc']
+				let g:airline_extensions = ['hunks']
 
 				set cinoptions=:0,p0,t0
 				set cinwords=if,else,while,do,for,switch,case

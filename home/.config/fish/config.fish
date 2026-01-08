@@ -11,3 +11,6 @@ set -gx PATH $PATH $HOME/.krew/bin
 
 # "Starship"
 starship init fish | source
+
+# uv
+fish_add_path "/home/rmeyer/.local/bin"
