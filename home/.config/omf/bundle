@@ -5,7 +5,6 @@ package direnv
 package fasd
 package foreign-env
 package fzf
-package git-flow
 package linuxbrew
 package nvm
 package thefuck

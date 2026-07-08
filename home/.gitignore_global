@@ -121,3 +121,10 @@ bin/pronto.sh
 
 # Holders
 docker-compose.override.yml.rob
+
+# Don't commit Claude files
+.claude/
+**/.claude/
+
+# Serena
+.serena
