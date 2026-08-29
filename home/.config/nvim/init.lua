@@ -119,6 +119,14 @@ vim.o.showmode = false
 --  See `:help 'clipboard'`
 vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
+
+  --  Neovim has no built-in clipboard on Linux -- it shells out to an external tool.
+  --  Without one, 'unnamedplus' fails silently and yanks never leave Neovim.
+  if vim.fn.has 'clipboard' == 0 then
+    local wl = vim.env.WAYLAND_DISPLAY
+    local pkg = (wl ~= nil and wl ~= '') and 'wl-clipboard' or 'xclip'
+    vim.notify('No clipboard provider found -- yanks will not reach the system clipboard.\nInstall one with: sudo apt install ' .. pkg, vim.log.levels.ERROR)
+  end
 end)
 
 -- Enable break indent

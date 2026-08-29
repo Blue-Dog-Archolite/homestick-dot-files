@@ -21,3 +21,6 @@ home/.ssh/*
 
 # fish universal variables are machine-local state, not config
 home/.config/fish/fish_variables
+
+# Machine-local secrets, never commit
+home/.config/fish/secrets.fish
