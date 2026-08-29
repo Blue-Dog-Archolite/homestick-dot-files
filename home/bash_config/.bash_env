@@ -1,6 +1,6 @@
 # Force fedora to never run ruby-mri
 export RUBYPICK=_jruby_
-export EDITOR=/usr/bin/vim
+export EDITOR=nvim
 
 export GIT_MERGE_TOOL=true
 

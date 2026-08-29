@@ -1,9 +1,9 @@
-home/.config
+home/.config/*
 
-!home/.config/fish/**
-!home/.config/nvim/**
-!home/.config/omf/**
-!home/.config/tmuxinator/**
+!home/.config/fish
+!home/.config/nvim
+!home/.config/omf
+!home/.config/tmuxinator
 
 home/.floo
 home/.floorc
@@ -18,3 +18,6 @@ tags*
 
 home/.ssh/*
 
+
+# fish universal variables are machine-local state, not config
+home/.config/fish/fish_variables
